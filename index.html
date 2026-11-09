@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>电商素材工作台 · 产品方案与交互原型</title>
+<style>
+:root{--bg:#ffffff;--surface:#f7f8fa;--line:#e4e7ec;--text:#1c2027;--muted:#5c6572;--accent:#185fa5;--accent-soft:#e6f1fb;--green:#0f6e56;--green-soft:#e1f5ee;--amber:#854f0b;--amber-soft:#faeeda}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;font-size:14px;line-height:1.7}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+header{border-bottom:1px solid var(--line);padding:40px 0 32px}
+.badge{display:inline-block;font-size:12px;padding:3px 10px;border-radius:20px;background:var(--amber-soft);color:var(--amber);margin-bottom:14px}
+h1{font-size:28px;font-weight:600;margin:0 0 10px;letter-spacing:-0.5px}
+.sub{color:var(--muted);margin:0;max-width:720px}
+.meta{margin-top:16px;font-size:12px;color:var(--muted)}
+section{padding:36px 0;border-bottom:1px solid var(--line)}
+h2{font-size:19px;font-weight:600;margin:0 0 6px}
+.lead{color:var(--muted);margin:0 0 22px;max-width:760px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.card{border:1px solid var(--line);border-radius:10px;padding:18px 20px;background:var(--bg)}
+.card h3{font-size:14px;font-weight:600;margin:0 0 8px}
+.card p{margin:0;color:var(--muted);font-size:13px}
+.num{display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;border-radius:6px;background:var(--accent-soft);color:var(--accent);font-size:12px;margin-right:8px}
+.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.flow .card{background:var(--surface);border:none}
+.flow .card span{display:block;font-size:12px;color:var(--accent);margin-bottom:6px}
+.demo{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.demo-bar{background:var(--surface);padding:12px 18px;border-bottom:1px solid var(--line);font-size:12px;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.demo-body{display:grid;grid-template-columns:320px 1fr}
+@media(max-width:760px){.demo-body{grid-template-columns:1fr}}
+.panel{padding:20px;border-right:1px solid var(--line)}
+@media(max-width:760px){.panel{border-right:none;border-bottom:1px solid var(--line)}}
+label{display:block;font-size:12px;color:var(--muted);margin:16px 0 6px}
+label:first-child{margin-top:0}
+input[type=text],textarea{width:100%;border:1px solid var(--line);border-radius:8px;padding:9px 11px;font-size:13px;font-family:inherit;background:var(--bg);color:var(--text)}
+textarea{resize:vertical;min-height:70px}
+input:focus,textarea:focus{outline:2px solid var(--accent-soft);border-color:var(--accent)}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{font-size:12px;padding:5px 11px;border-radius:20px;border:1px solid var(--line);background:var(--bg);color:var(--muted);cursor:pointer;user-select:none}
+.chip.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+.fake-upload{border:1px dashed var(--line);border-radius:8px;padding:14px;text-align:center;font-size:12px;color:var(--muted);cursor:pointer}
+.btn{width:100%;margin-top:20px;padding:10px;border-radius:8px;border:1px solid var(--accent);background:var(--accent);color:#fff;font-size:13px;font-family:inherit;cursor:pointer}
+.btn:disabled{opacity:.55;cursor:default}
+.result{padding:20px;min-height:340px}
+.empty{color:var(--muted);font-size:13px;padding:60px 10px;text-align:center}
+.progress{height:4px;background:var(--line);border-radius:4px;overflow:hidden;margin:14px 0}
+.progress i{display:block;height:100%;background:var(--accent);width:0;transition:width .2s}
+.assets{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.asset{border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.thumb{height:88px;background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--muted)}
+.thumb.a{background:var(--green-soft);color:var(--green)}
+.thumb.b{background:var(--accent-soft);color:var(--accent)}
+.asset div:last-child{padding:9px 11px}
+.asset b{display:block;font-size:12px;font-weight:600}
+.asset small{display:block;color:var(--muted);font-size:11px;margin-top:2px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:500;font-size:12px;background:var(--surface)}
+td:first-child{white-space:nowrap}
+.tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:5px;background:var(--amber-soft);color:var(--amber)}
+.note{background:var(--surface);border-left:3px solid var(--accent);padding:14px 18px;font-size:13px;color:var(--muted);border-radius:0 8px 8px 0;margin-top:18px}
+ul{margin:10px 0 0;padding-left:20px;color:var(--muted);font-size:13px}
+li{margin:5px 0}
+footer{padding:28px 0 48px;color:var(--muted);font-size:12px}
+a{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <span class="badge">方案与交互原型 · 暂无可运行的小程序代码</span>
+  <h1>电商素材工作台</h1>
+  <p class="sub">上传一张商品实拍图，填清卖点和宣传主题，一次拿到按平台分好的整套素材：合规白底主图、场景主图、详情长图、种草海报。面向淘宝、京东、拼多多、抖音、小红书、亚马逊、TikTok Shop。</p>
+  <p class="meta">仓库定位：产品方案 + 概念原型，不是成品。页面里的生成结果是演示数据，不调用任何生成接口。</p>
+</header>
+
+<section>
+  <h2>先解决什么</h2>
+  <p class="lead">同一个商品铺 7 个平台，卖家现在要重复做 20 张以上的图。痛的不是"不会做图"，是规则太碎。</p>
+  <div class="grid3">
+    <div class="card"><h3><span class="num">1</span>规格不一样</h3><p>国内主图普遍 1:1，小红书要 3:4，亚马逊要 1600px 以上纯白底。同一张图硬裁就切掉商品，拉伸就变形。</p></div>
+    <div class="card"><h3><span class="num">2</span>规则互相打架</h3><p>亚马逊和 TikTok Shop 主图禁任何文字和水印，双十一海报全靠促销文案。一套图不可能通吃，必须分层输出。</p></div>
+    <div class="card"><h3><span class="num">3</span>商品不能画歪</h3><p>端到端文生图会改 logo、颜色、配件，卖家不敢上架。必须以实拍图为真值源，AI 只碰背景和排版。</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>生成链路</h2>
+  <p class="lead">一次输入，三层处理，按平台分发成素材包，而不是产出一张"万能图"。</p>
+  <div class="flow">
+    <div class="card"><span>输入</span><h3>卖点 · 素材图 · 主题 · 平台</h3><p>客户填产品功能、上传实拍图或已有素材、选节日主题与投放平台。</p></div>
+    <div class="card"><span>第一层</span><h3>商品保真</h3><p>抠图并用蒙版锁死商品主体，原图的形状、logo、颜色、配件不参与生成。</p></div>
+    <div class="card"><span>第二层</span><h3>文案与模板</h3><p>卖点转标题、详情模块文案、种草脚本；按主题套视觉模板和排版。</p></div>
+    <div class="card"><span>第三层</span><h3>规则与导出</h3><p>校验尺寸、白底 RGB、商品占比、文字占比、禁用词，注入 AI 标识后打包。</p></div>
+  </div>
+  <div class="note">技术边界：WorkBuddy 云服务提供数据库、登录、文件存储和大模型调用，<b>不含图像生成</b>。抠图、场景生成、超分和模板合成需要外接图像 API，这部分是成本大头。整套 20–40 张图属分钟级任务，小程序端必须走异步队列 + 进度通知。</div>
+</section>
+
+<section>
+  <h2>交互原型</h2>
+  <p class="lead">选平台和主题，看看一次任务会分包出哪些素材。下面是模拟输出，用来对齐产品形态，不代表真实生成效果。</p>
+  <div class="demo">
+    <div class="demo-bar"><span>概念演示 · 不调用任何接口</span><span id="stat">已选 0 个平台 · 预计 0 张素材</span></div>
+    <div class="demo-body">
+      <div class="panel">
+        <label>商品名称</label>
+        <input type="text" id="pname" value="便携保温杯 450ml">
+        <label>核心卖点</label>
+        <textarea id="selling">6 小时保温、单手开盖、316 不锈钢内胆、杯身 210g</textarea>
+        <label>素材图</label>
+        <div class="fake-upload" id="fakeUpload">点击上传实拍图 / 已有素材图（演示占位）</div>
+        <label>宣传主题</label>
+        <div class="chips" id="themeChips"></div>
+        <label>目标平台</label>
+        <div class="chips" id="platformChips"></div>
+        <button class="btn" id="genBtn">生成素材包</button>
+      </div>
+      <div class="result" id="result">
+        <div class="empty">左侧选好平台和主题后，点「生成素材包」查看分包结果。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>平台规格矩阵</h2>
+  <p class="lead">常见基准值，用于规则引擎的初始配置。<b>规则会变，正式出图前必须到各平台卖家后台复核</b>；大促期间尤其容易调整。</p>
+  <table>
+    <thead><tr><th>平台</th><th>主图规格</th><th>硬约束</th><th>输出素材</th></tr></thead>
+    <tbody id="specBody"></tbody>
+  </table>
+  <div class="note">来源：标记侠规格库 biaojixia.com/specs、Product Scene productscene.com/requirements（自称逐平台核对帮助页）、禾石商业摄影 2026-06 跨境平台对比。复核渠道：各平台卖家后台「图片规范」、Amazon Seller Central 产品图片指南、TikTok Shop Seller Center。二手文章错误较多，不能作为规则引擎的唯一依据。</div>
+</section>
+
+<section>
+  <h2>路线图</h2>
+  <table>
+    <thead><tr><th>阶段</th><th>范围</th><th>验证目标</th></tr></thead>
+    <tbody>
+      <tr><td>P0</td><td>1 张实拍图 + 卖点 + 1 个主题 → 白底主图 ×1、场景主图 ×2、详情长图 ×1；先做淘宝 + 拼多多</td><td>商品不变形、能直接导出上架</td></tr>
+      <tr><td>P1</td><td>加小红书种草图 + 节日主题模板库</td><td>模板复用率、风格一致性</td></tr>
+      <tr><td>P2</td><td>跨境：亚马逊纯白底校验 + TikTok Shop</td><td>AI 标识与平台规则的冲突如何落地</td></tr>
+      <tr><td>P3</td><td>账号、额度计费、批量 SKU、团队空间</td><td>商业化闭环</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h2>上线前必须处理的合规项</h2>
+  <ul>
+    <li><span class="tag">已核实</span> 《人工智能生成合成内容标识办法》与配套强制性国标 2025-09-01 施行：图片需显著显式标识，文件元数据需隐式标识（AIGC 字段、服务提供者、内容编号）；提供下载导出时要确保文件里含显式标识。来源：中国政府网、新华网、网信网。</li>
+    <li><span class="tag">已核实</span> 微信小程序须企业主体 + 「深度合成 - AI 绘画 / AI 创作」类目；用第三方模型要提供技术方《互联网信息服务算法备案》（生成合成类）及双方盖章合作协议（含算法名称或备案编号）；生成页显著标注"AI 生成"。来源：微信开放社区官方答复。个人主体无法申请。</li>
+    <li><span class="tag">待法务确认</span> 国内法规要求导出的 AI 图片带显式标识，但亚马逊 / TikTok Shop 主图禁止任何文字、水印、logo，两条要求直接冲突。目前没有确定解法，不能假设某种折中做法合规。</li>
+    <li><span class="tag">需复核</span> 平台自身政策：亚马逊 2026-08 起含 AI 生成逼真人物的素材需加元数据标签；TikTok Shop 要求 AI 内容标注且禁止用 AI 改变商品外观或虚构功效。来自媒体报道，具体条款以卖家后台为准。</li>
+    <li><span class="tag">需复核</span> 客户上传素材的商用授权、字体与模板版权、平台违禁词库，都要在产品里留痕。</li>
+  </ul>
+</section>
+
+<footer>
+  <p>仓库状态：产品方案阶段。所有「已核实」条目均附来源；路线图、成本判断和平台取舍属于规划与推测，不是已上线事实。</p>
+  <p>完整需求见 <a href="docs/PRD.md">docs/PRD.md</a>，合规清单见 <a href="docs/compliance.md">docs/compliance.md</a>。</p>
+</footer>
+
+</div>
+<script>
+var PLATFORMS=[
+ {id:'taobao',name:'淘宝/天猫',spec:'1:1，≥800×800，建议 1200×1200',rule:'最多 5 张，第 5 张建议白底',assets:['白底主图','场景主图','详情长图']},
+ {id:'jd',name:'京东',spec:'1:1，≥800×800',rule:'首图建议白底，详情宽 790 / 移动 750',assets:['白底主图','场景主图','详情长图']},
+ {id:'pdd',name:'拼多多',spec:'1:1，≥750×750',rule:'文字覆盖过多会限流，详情宽 750',assets:['白底主图','场景主图','详情长图']},
+ {id:'douyin',name:'抖音/抖店',spec:'1:1 800×800 或 3:4 750×1000',rule:'最多 9 张，信息流偏竖版',assets:['场景主图','详情长图','竖版海报']},
+ {id:'xhs',name:'小红书',spec:'3:4 1080×1440',rule:'整篇笔记只能一种比例，图文最多 18 张',assets:['种草图','竖版海报']},
+ {id:'amazon',name:'亚马逊',spec:'1:1，长边 ≥1000，推荐 1600–2000',rule:'主图纯白 RGB 255,255,255、商品占 ≥85%、禁文字/logo/水印/道具',assets:['白底主图','详情长图']},
+ {id:'tiktok',name:'TikTok Shop',spec:'≥600×600，推荐 800–1080 方形',rule:'主图纯白客观实拍、禁文字水印、商品占 ≥80%、最多 9 张',assets:['白底主图','场景主图']}
+];
+var THEMES=['双十一','情人节','新品上市','日常上新'];
+var selected={taobao:true,pdd:true};
+var theme='双十一';
+var SIZE={'白底主图':'按平台主图规格','场景主图':'按平台主图规格','详情长图':'750px 宽（跨境按模板）','竖版海报':'1080×1440','种草图':'1080×1440'};
+
+function renderChips(){
+ var pc=document.getElementById('platformChips');pc.innerHTML='';
+ PLATFORMS.forEach(function(p){
+  var e=document.createElement('span');e.className='chip'+(selected[p.id]?' on':'');e.textContent=p.name;
+  e.onclick=function(){selected[p.id]=!selected[p.id];renderChips();updateStat();};pc.appendChild(e);
+ });
+ var tc=document.getElementById('themeChips');tc.innerHTML='';
+ THEMES.forEach(function(t){
+  var e=document.createElement('span');e.className='chip'+(theme===t?' on':'');e.textContent=t;
+  e.onclick=function(){theme=t;renderChips();};tc.appendChild(e);
+ });
+}
+function picked(){return PLATFORMS.filter(function(p){return selected[p.id];});}
+function count(){return picked().reduce(function(n,p){return n+p.assets.length;},0);}
+function updateStat(){document.getElementById('stat').textContent='已选 '+picked().length+' 个平台 · 预计 '+count()+' 张素材（模拟）';}
+function renderSpec(){
+ var b=document.getElementById('specBody');b.innerHTML='';
+ PLATFORMS.forEach(function(p){
+  var tr=document.createElement('tr');
+  tr.innerHTML='<td>'+p.name+'</td><td>'+p.spec+'</td><td>'+p.rule+'</td><td>'+p.assets.join(' / ')+'</td>';
+  b.appendChild(tr);
+ });
+}
+document.getElementById('fakeUpload').onclick=function(){this.textContent='已选择：product-shot.jpg（演示占位，未真实上传）';};
+document.getElementById('genBtn').onclick=function(){
+ var list=picked();var box=document.getElementById('result');
+ if(!list.length){box.innerHTML='<div class="empty">至少选一个平台。</div>';return;}
+ var btn=this;btn.disabled=true;btn.textContent='生成中…';
+ box.innerHTML='<div class="empty">正在按平台规则分包…</div><div class="progress"><i id="bar"></i></div>';
+ var pct=0;var timer=setInterval(function(){
+  pct+=12;var bar=document.getElementById('bar');if(bar)bar.style.width=Math.min(pct,100)+'%';
+  if(pct>=100){clearInterval(timer);showAssets(list,box);btn.disabled=false;btn.textContent='生成素材包';}
+ },90);
+};
+function showAssets(list,box){
+ var html='<div style="font-size:12px;color:var(--muted);margin-bottom:12px">'+theme+'主题 · '+list.length+' 个平台 · '+count()+' 张（演示数据，非真实生成）</div><div class="assets">';
+ list.forEach(function(p){
+  p.assets.forEach(function(a,i){
+   var cls=a==='白底主图'?'a':'b';
+   html+='<div class="asset"><div class="thumb '+cls+'">'+(a==='白底主图'?'255,255,255':p.name)+'</div><div><b>'+p.name+' · '+a+'</b><small>'+SIZE[a]+'</small><small>待真实生成</small></div></div>';
+  });
+ });
+ html+='</div><div class="note" style="margin-top:16px">真实系统里，这一步由异步任务队列完成：抠图锁主体 → 生成场景背景 → 模板排版 → 平台规则校验 → 注入 AI 标识 → 打包导出。小程序端只负责上传、进度和下载。</div>';
+ box.innerHTML=html;
+}
+renderChips();renderSpec();updateStat();
+</script>
+</body>
+</html>
