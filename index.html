@@ -57,6 +57,27 @@ button,input,select,textarea{font-family:inherit}
 .slot-h .tip{font-size:10px;color:var(--muted)}
 .slot-h .req{font-size:9px;color:var(--danger);border:1px solid #f0d2d0;border-radius:4px;padding:0 4px}
 .slot-h .add{margin-left:auto;font-size:10px;color:var(--accent);background:none;border:0;cursor:pointer;padding:2px 0}
+.slot-effect{font-size:9px;color:#7a8490;line-height:1.55;margin:-2px 0 4px}
+.slot-state-row{margin:2px 0 6px}
+.slot-state{display:inline-block;font-size:9px;padding:1px 5px;border-radius:3px;white-space:nowrap}
+.slot-state.off{background:#f1f3f6;color:#8a929c}
+.slot-state.on{background:#e7f5ee;color:#1e7a50}
+.slot-state.warn{background:#fff4e2;color:#a86a12}
+.rulebox{border:1px solid var(--line);border-radius:7px;margin-top:9px;background:var(--surface);overflow:hidden}
+.rule-h{display:flex;align-items:center;gap:7px;padding:7px 9px;cursor:pointer;user-select:none}
+.rule-h b{font-size:10px;font-weight:600}
+.rule-h span{font-size:9px;color:var(--muted)}
+.rule-h em{font-size:9px;color:var(--muted);font-style:normal;margin-left:auto;transition:transform .15s}
+.rulebox.closed .rule-h em{transform:rotate(-90deg)}
+.rulebox.closed .rule-b{display:none}
+.rule-b{padding:4px 9px 9px;border-top:1px solid var(--line2)}
+.rule-row{padding:6px 0;border-bottom:1px dashed var(--line2);font-size:9px;line-height:1.55}
+.rule-row:last-child{border-bottom:0}
+.rule-row b{font-size:10px;font-weight:600;display:block;margin-bottom:2px}
+.rule-row .r-txt{color:var(--muted)}
+.rule-row .r-yes{color:#1e7a50}
+.rule-row .r-no{color:#b0524a}
+.rule-note{font-size:9px;color:var(--muted);background:var(--bg);border-radius:5px;padding:6px 7px;margin-top:7px;line-height:1.55}
 .slot-drop{border:1px dashed #cdd5de;border-radius:6px;padding:7px;text-align:center;font-size:10px;color:var(--muted);cursor:pointer;background:#fcfdfe}
 .slot-drop:hover,.slot-drop.drag{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
 .items{margin-top:7px;display:flex;flex-direction:column;gap:6px}
@@ -239,7 +260,11 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--accent-soft);bor
     <section class="sec" id="secAssets">
       <div class="sec-h"><span class="caret">▾</span><b>① 素材上传与识别</b><span class="cnt" id="assetCount">0 张</span></div>
       <div class="sec-b">
-        <div class="notice">不同图片承担不同角色：主体图锁商品像素，参考图只影响背景与风格。识别结果可手动改判。</div>
+        <div class="notice">除「商品主体图」外，其余槽位均为选填。主体图锁商品像素，参考图只影响背景、人物层与排版；识别结果可手动改判。</div>
+        <div class="rulebox closed" id="ruleBox">
+          <div class="rule-h" id="ruleHead"><b>融合规则</b><span>哪类图进哪个素材位</span><em>▾</em></div>
+          <div class="rule-b" id="ruleBody"></div>
+        </div>
         <div id="slots"></div>
       </div>
     </section>
@@ -356,21 +381,21 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--accent-soft);bor
 <script>
 /* ---------- 常量 ---------- */
 var SLOT_DEF=[
- {id:'hero',name:'商品主体图',tip:'真值源 · 商品像素不改',req:true,multi:true},
- {id:'detail',name:'多角度 / 细节图',tip:'补充主体参考',multi:true},
- {id:'model',name:'人物 / 模特参考',tip:'仅用于副图、种草、海报位',multi:true},
- {id:'scene',name:'场景 / 道具 / 光影参考',tip:'控制背景与光向',multi:true},
- {id:'brand',name:'品牌资产（Logo）',tip:'用于海报与详情',multi:false},
- {id:'recycle',name:'旧成品素材回收',tip:'去文字 → 抠主体 → 重排版',multi:true}
+ {id:'hero',name:'商品主体图',tip:'真值源 · 商品像素不改',req:true,multi:true,effect:'所有素材位的商品主体；主图位只用它',where:'全部素材位'},
+ {id:'detail',name:'多角度 / 细节图',tip:'补充主体参考',multi:true,effect:'副图位角落细节小图、详情位细节拼版；主体图缺位时顶替主图源',where:'副图 / 详情位'},
+ {id:'model',name:'人物 / 模特参考',tip:'仅用于副图、种草、海报位',multi:true,effect:'副图 / 种草 / 海报位的人物层；需开启「人物融合」开关；主图位拦截',where:'副图 / 种草 / 海报位'},
+ {id:'scene',name:'场景 / 道具 / 光影参考',tip:'控制背景与光向',multi:true,effect:'副图 / 种草 / 海报位的模糊背景层，控制色调与光向；主图位拦截',where:'副图 / 种草 / 海报位'},
+ {id:'brand',name:'品牌资产（Logo）',tip:'用于海报 / 详情 / 种草位',multi:false,effect:'详情 / 种草 / 海报位右下角 Logo；主图位拦截',where:'详情 / 种草 / 海报位'},
+ {id:'recycle',name:'旧成品素材回收',tip:'去文字 → 抠主体 → 重排版',multi:true,effect:'裁掉旧文案区 → 抠主体 → 重新排版；主体图缺位时顶替主图源',where:'按识别结果重排版'}
 ];
 var KINDS=['白底图','带背景实拍','成品图','人物参考','场景参考','品牌资产','待判定'];
 var PLAN={
  '白底图':['主体提取','锁为真值源','按素材位导出'],
  '带背景实拍':['抠图 + 蒙版锁主体','重光照 / 接触阴影','按素材位导出'],
  '成品图':['裁切去除原有文案区','抠出主体','重新排版'],
- '人物参考':['姿态与光影解析','仅进副图 / 种草 / 海报位'],
- '场景参考':['背景与光向提取','参与副图 / 海报合成'],
- '品牌资产':['Logo 与色值注入','用于海报与详情'],
+ '人物参考':['姿态与光影解析','需开关开启 · 副图 / 种草 / 海报位'],
+ '场景参考':['背景与光向提取','参与副图 / 种草 / 海报位'],
+ '品牌资产':['Logo 与色值注入','用于详情 / 种草 / 海报位'],
  '待判定':['需人工改判后处理']
 };
 var PLATFORMS=[
@@ -428,17 +453,16 @@ function pickedPlatforms(){return PLATFORMS.filter(function(p){return state.plat
 function pickedPositions(){return POSITIONS.filter(function(o){return state.positions[o.id];});}
 function estimate(){var n=0;pickedPlatforms().forEach(function(p){pickedPositions().forEach(function(o){if(p.pos.indexOf(o.id)>=0)n++;});});return n;}
 function itemsOf(slot){return state.items.filter(function(i){return i.slot===slot;});}
-/* 真实素材优先于内置示例：避免示例图排在数组前面时被误当成商品真值源 */
+/* 按槽位优先级取图：同一槽位里用户真实图优先于内置示例；
+   槽位非空就以此为准，不会被后面槽位的真实图抢走（细节图不能顶替主体图当主图） */
 function firstOf(slots){
- var sample=null;
  for(var i=0;i<slots.length;i++){
   var a=itemsOf(slots[i]);
-  for(var j=0;j<a.length;j++){
-   if(a[j].builtin){if(!sample)sample=a[j];continue;}
-   return a[j];
-  }
+  if(!a.length)continue;
+  for(var j=0;j<a.length;j++)if(!a[j].builtin)return a[j];
+  return a[0];
  }
- return sample;
+ return null;
 }
 
 /* ---------- 主题库 ---------- */
@@ -597,6 +621,39 @@ function productImg(){
 function refImg(slot){var it=firstOf([slot]);return it?it.img:null;}
 
 /* ---------- 素材槽位渲染 ---------- */
+function slotStatus(s){
+ var real=itemsOf(s.id).filter(function(i){return !i.builtin;}).length;
+ if(!real)return {t:s.req?'未上传 · 预览用示意商品占位':'选填 · 未上传',c:'off'};
+ if(s.id==='model'&&!state.sw.model)return {t:'已传 '+real+' 张 · 人物融合开关未开启，暂不生效',c:'warn'};
+ if(s.id==='recycle'&&!state.sw.cleanText)return {t:'已传 '+real+' 张 · 裁切开关未开启，暂不生效',c:'warn'};
+ return {t:'已传 '+real+' 张 · 进'+s.where,c:'on'};
+}
+/* 融合规则：按素材位说明哪类图参与、哪类被拦截，并反映当前上传状态 */
+var FUSION_RULES=[
+ {label:'主图位 · 合规白底',parts:[['主体图','hero']],block:'细节图 / 人物 / 场景 / Logo / 全部文案一律拦截'},
+ {label:'副图位 · 场景 / 人物融合',parts:[['主体图','hero'],['细节图','detail'],['场景参考','scene'],['人物参考','model','model']],block:'跨境平台副图仍限制文字与标识'},
+ {label:'详情位 · 卖点长图',parts:[['主体图','hero'],['细节图','detail'],['Logo','brand']],block:'人物 / 场景参考不进入详情位'},
+ {label:'种草位 · 笔记图',parts:[['主体图','hero'],['场景参考','scene'],['人物参考','model','model'],['Logo','brand']],block:'细节图不进入种草位'},
+ {label:'海报位 · 大促',parts:[['主体图','hero'],['场景参考','scene'],['人物参考','model','model'],['Logo','brand']],block:'细节图不进入海报位'}
+];
+function renderRules(){
+ var box=$('ruleBody');if(!box)return;box.innerHTML='';
+ FUSION_RULES.forEach(function(d){
+  var row=el('div','rule-row');row.appendChild(el('b',null,d.label));
+  var line=el('div','r-txt');line.appendChild(el('span',null,'参与：'));
+  d.parts.forEach(function(p,i){
+   if(i)line.appendChild(el('span',null,' · '));
+   var ok=itemsOf(p[1]).some(function(i){return !i.builtin;});
+   var demo=!ok&&p[1]==='hero'&&itemsOf('hero').length>0;
+   var sw=p[2]==='model'&&!state.sw.model;
+   line.appendChild(el('span',ok&&!sw?'r-yes':'',p[0]+(ok?' 已传':(demo?' 示例占位':' 未传'))+(sw?'（开关未开）':'')));
+  });
+  row.appendChild(line);
+  var blk=el('div','r-txt');blk.appendChild(el('span','r-no','拦截：'));blk.appendChild(el('span',null,d.block));row.appendChild(blk);
+  box.appendChild(row);
+ });
+ box.appendChild(el('div','rule-note','主体图像素始终锁定，合成只作用于背景、人物层与文字层；主图位按平台规则一律拦截参考图与文案。当前融合为前端图层叠加演示，未接入 AI 抠图或生成式融合。'));
+}
 function renderSlots(){
  var box=$('slots');box.innerHTML='';
  SLOT_DEF.forEach(function(s){
@@ -604,6 +661,8 @@ function renderSlots(){
   var h=el('div','slot-h');h.appendChild(el('b',null,s.name));h.appendChild(el('span','tip',s.tip));
   if(s.req)h.appendChild(el('span','req','必填'));
   var add=el('button','add','+ 上传');add.dataset.act='add';add.dataset.slot=s.id;h.appendChild(add);wrap.appendChild(h);
+  wrap.appendChild(el('div','slot-effect','作用：'+s.effect));
+  var st=slotStatus(s),stRow=el('div','slot-state-row');stRow.appendChild(el('span','slot-state '+st.c,st.t));wrap.appendChild(stRow);
   var drop=el('div','slot-drop','点击或拖拽图片到这里'+(s.multi?'（可多选）':''));drop.dataset.act='add';drop.dataset.slot=s.id;wrap.appendChild(drop);
   var list=el('div','items');
   itemsOf(s.id).forEach(function(it){
@@ -632,6 +691,7 @@ function renderSlots(){
   drop.addEventListener('drop',function(e){loadFiles(e.dataTransfer&&e.dataTransfer.files,s.id);});
  });
  $('assetCount').textContent=state.items.length+' 张';
+ renderRules();
 }
 function addItem(img,name,slot,size,builtin){
  var a=analyze(img,slot,name);
@@ -720,7 +780,7 @@ function renderSwitches(){
  SWITCHES.forEach(function(s){
   var row=el('div','chkrow');row.appendChild(el('label',null,s.n));
   var sw=el('div','sw'+(state.sw[s.id]?' on':''));sw.appendChild(el('i'));
-  sw.onclick=function(){state.sw[s.id]=!state.sw[s.id];renderSwitches();changed();};
+  sw.onclick=function(){state.sw[s.id]=!state.sw[s.id];renderSwitches();renderSlots();changed();};
   row.appendChild(sw);box.appendChild(row);
  });
 }
@@ -734,11 +794,11 @@ function renderPlan(){
   {t:'素材解析',d:state.items.length+' 张已载入 · 本地启发式识别',ok:state.items.length>0},
   {t:'主题套用',d:'「'+themeName()+'」配色 · 主标语 '+cut(headline(themeCfg()),16),ok:true},
   {t:'要点应用',d:pts.length+' 条利益点 / '+tp.length+' 个话题 → 副图、详情、种草、海报',ok:pts.length>0},
-  {t:'主体锁定',d:'主体图 '+hero+' 张 / 细节图 '+detail+' 张 → 蒙版锁像素',ok:hero+detail>0},
+  {t:'主体锁定',d:'主体图 '+hero+' 张锁像素 · 细节图 '+detail+' 张进副图 / 详情位',ok:hero+detail>0},
   {t:'旧素材回收',d:state.sw.cleanText?rec+' 张 → 裁切文案区 → 抠主体 → 重排版':'已关闭',ok:state.sw.cleanText&&rec>0},
-  {t:'场景融合',d:scene+' 张参考 → 副图 / 海报背景层',ok:scene>0},
-  {t:'人物融合',d:state.sw.model?(model+' 张参考 → 仅非主图位'):'已关闭',ok:state.sw.model&&model>0},
-  {t:'品牌注入',d:brand+' 个 Logo / 主色 → 海报与详情',ok:brand>0},
+  {t:'场景融合',d:scene+' 张参考 → 副图 / 种草 / 海报背景层（主图拦截）',ok:scene>0},
+  {t:'人物融合',d:state.sw.model?(model+' 张参考 → 副图 / 种草 / 海报位'):'已关闭（需开启人物融合开关）',ok:state.sw.model&&model>0},
+  {t:'品牌注入',d:brand+' 个 Logo / 主色 → 详情 / 种草 / 海报位',ok:brand>0},
   {t:'合规校验',d:'跨境主图禁文字 / Logo / 人物 · 禁用词命中 '+risks.length+' 个',ok:risks.length===0},
   {t:'按位导出',d:ps.length+' 平台 × '+os.length+' 素材位 → 预计 '+estimate()+' 张',ok:true}
  ];
@@ -774,6 +834,21 @@ function drawProduct(x,img,rx,ry,rw,rh,ratio){
  x.save();x.shadowColor='rgba(0,0,0,.16)';x.shadowBlur=Math.max(6,rw*.035);x.shadowOffsetY=Math.max(3,rw*.018);
  x.drawImage(img,rx+(rw-dw)/2,ry+(rh-dh)/2,dw,dh);x.restore();
 }
+function refImgs(slot){return itemsOf(slot).map(function(i){return i.img;}).slice(0,3);}
+function drawInset(x,img,rx,ry,rw,rh,U){
+ if(!img||!img.width||!img.height)return;
+ x.save();
+ x.fillStyle='#FFFFFF';rr(x,rx,ry,rw,rh,4*U);x.fill();
+ x.strokeStyle='rgba(0,0,0,.10)';x.lineWidth=Math.max(1,U);x.stroke();
+ var pad=5*U,s=Math.min((rw-2*pad)/img.width,(rh-2*pad)/img.height),dw=img.width*s,dh=img.height*s;
+ try{x.drawImage(img,rx+(rw-dw)/2,ry+(rh-dh)/2,dw,dh);}catch(e){}
+ x.restore();
+}
+function drawModelLayer(x,model,cfg,W,H,U,rx,ry,rw,rh,alpha){
+ if(!model)return;
+ x.save();x.globalAlpha=alpha||.26;try{x.drawImage(model,rx,ry,rw,rh);}catch(e){}x.restore();
+ x.fillStyle=cfg.bg;x.globalAlpha=.3;x.fillRect(0,0,W,H*.62);x.globalAlpha=1;
+}
 function aiBadge(x,W,H,U){
  if(!state.sw.aiMark)return;
  var w=92*U,h=24*U,px=W-w-14*U,py=H-h-14*U;
@@ -795,7 +870,9 @@ function paint(pos,p){
  var tag=cut(headline(cfg),18),badge=badgeText(cfg);
  var mainColor=cfg.useBrand?($('brandColor').value||cfg.main):cfg.main;
  var prod=productImg(),scene=refImg('scene'),model=refImg('model'),logo=refImg('brand');
- var isGlobal=p.group==='global',notes=[],tags=[];
+ var details=refImgs('detail');
+ var isGlobal=p.group==='global',notes=[],tags=[],sources=[];
+ function used(n){if(sources.indexOf(n)<0){sources.push(n);tags.push({t:n+' 已参与',c:''});}}
  if(pos!=='main'&&itemsOf('recycle').length&&state.sw.cleanText)tags.push({t:'旧素材已重排版',c:''});
  if(pos!=='main'){
   tags.push({t:'宣传要点 '+(pts.length+(b.claim?1:0)+(b.mechanism?1:0))+' 项',c:'ok'});
@@ -815,12 +892,14 @@ function paint(pos,p){
   x.fillStyle=mainColor;x.fillRect(0,0,W,H*.14);
   txt(x,cut(tag,16),W*.07,H*.094,32*U,'#FFFFFF','left','500');
   if(state.sw.model&&model){
-   x.save();x.globalAlpha=.30;var mw=W*.42,mh=H*.68;x.drawImage(model,W*.54,H*.2,mw,mh);x.restore();
-   var g=x.createLinearGradient(W*.5,0,W,0);g.addColorStop(0,'rgba(255,255,255,0)');g.addColorStop(1,cfg.bg);x.fillStyle=g;x.fillRect(W*.5,0,W*.5,H);
-   tags.push({t:'人物参考已参与',c:''});
+   x.save();x.globalAlpha=.42;var mw=W*.42,mh=H*.68;x.drawImage(model,W*.54,H*.2,mw,mh);x.restore();
+   var g=x.createLinearGradient(W*.5,0,W,0);g.addColorStop(0,'rgba(255,255,255,0)');g.addColorStop(1,cfg.bg);
+   x.save();x.globalAlpha=.5;x.fillStyle=g;x.fillRect(W*.5,0,W*.5,H);x.restore();
+   used('人物参考');
   }
-  if(scene)tags.push({t:'场景参考已参与',c:''});
+  if(scene)used('场景参考');
   drawProduct(x,prod,W*.08,H*.17,W*.84,H*.62,.9);
+  if(details.length){drawInset(x,details[0],W*.73,H*.55,W*.23,H*.24,U);used('细节图');}
   x.fillStyle='rgba(255,255,255,.86)';rr(x,W*.06,H*.84,W*.88,H*.1,6*U);x.fill();
   txt(x,cut(pts[0]||name,20),W*.09,H*.905,20*U,cfg.sub,'left','500');
   if(state.sw.aiMark&&!isGlobal)aiBadge(x,W,H,U);
@@ -830,7 +909,12 @@ function paint(pos,p){
   x.fillStyle=mainColor;x.fillRect(0,0,W,H*.105);
   txt(x,cut(name,18),W*.06,H*.052,28*U,'#FFFFFF','left','600');
   txt(x,cut(tag,20)+' · 产品详情',W*.06,H*.085,15*U,'rgba(255,255,255,.9)','left','400');
-  drawProduct(x,0,H*.12,W,H*.35,.8);
+  if(details.length){
+   drawProduct(x,prod,W*.04,H*.12,W*.62,H*.35,.8);
+   var dh=Math.min(H*.16,(H*.35-H*.02)/Math.min(2,details.length)-H*.01);
+   details.slice(0,2).forEach(function(im,i){drawInset(x,im,W*.70,H*.13+i*(dh+H*.015),W*.26,dh,U);});
+   used('细节图');
+  }else drawProduct(x,prod,0,H*.12,W,H*.35,.8);
   var y=H*.52;
   pts.slice(0,3).forEach(function(v,i){
    x.fillStyle=cfg.bg;rr(x,W*.06,y,W*.88,H*.088,8*U);x.fill();
@@ -843,12 +927,13 @@ function paint(pos,p){
    x.fillStyle=mainColor;rr(x,W*.06,y,W*.88,H*.07,6*U);x.fill();
    txt(x,cut(b.mechanism,26),W*.1,y+H*.046,15*U,'#FFFFFF','left','500');
   }
-  if(logo){try{x.drawImage(logo,W*.78,H*.93,W*.16,W*.16*(logo.height/logo.width));}catch(e){}}
+  if(logo){try{x.drawImage(logo,W*.78,H*.93,W*.16,W*.16*(logo.height/logo.width));}catch(e){}used('Logo');}
   if(state.sw.aiMark&&!isGlobal)aiBadge(x,W,H,U);
   tags.push({t:'要点排版',c:'ok'});
  }else if(pos==='seed'){
   x.fillStyle=cfg.bg;x.fillRect(0,0,W,H);
-  if(scene){x.save();try{x.filter='blur('+Math.max(4,Math.round(20*U))+'px)';}catch(e){}x.globalAlpha=.35;x.drawImage(scene,0,0,W,H*.55);x.restore();}
+  if(scene){x.save();try{x.filter='blur('+Math.max(4,Math.round(20*U))+'px)';}catch(e){}x.globalAlpha=.35;x.drawImage(scene,0,0,W,H*.55);x.restore();used('场景参考');}
+  if(state.sw.model&&model){drawModelLayer(x,model,cfg,W,H,U,W*.55,H*.08,W*.42,H*.48,.26);used('人物参考');}
   txt(x,cut(tag,16),W*.08,H*.068,30*U,mainColor,'left','600');
   drawProduct(x,prod,W*.06,H*.085,W*.88,H*.47,.9);
   txt(x,cut(name,14),W*.08,H*.625,28*U,cfg.sub,'left','600');
@@ -858,13 +943,15 @@ function paint(pos,p){
    x.fillStyle='rgba(255,255,255,.94)';rr(x,W*.08,by,w,38*U,19*U);x.fill();
    txt(x,cut(v,12),W*.08+15*U,by+25*U,15*U,cfg.sub,'left','400');by+=46*U;
   });
-  if(logo){try{x.drawImage(logo,W*.08,H*.9,52*U,52*U*(logo.height/logo.width));}catch(e){}}
+  if(logo){try{x.drawImage(logo,W*.08,H*.9,52*U,52*U*(logo.height/logo.width));}catch(e){}used('Logo');}
   var topic=tp.length?tp.map(function(t){return '#'+cut(t,8);}).join('  '):('#'+cut(name,8).replace(/\s/g,'')+'  #好物分享');
   txt(x,cut(topic,26),W*.08,H*.955,14*U,cfg.sub,'left','400');
   if(state.sw.aiMark&&!isGlobal)aiBadge(x,W,H,U);
   tags.push({t:'3:4 竖版',c:'ok'});
  }else{
   x.fillStyle=cfg.bg;x.fillRect(0,0,W,H);
+  if(scene){x.save();try{x.filter='blur('+Math.max(4,Math.round(18*U))+'px)';}catch(e){}x.globalAlpha=.4;x.drawImage(scene,0,0,W,H*.62);x.restore();used('场景参考');}
+  if(state.sw.model&&model){drawModelLayer(x,model,cfg,W,H,U,W*.55,H*.14,W*.42,H*.5,.24);used('人物参考');}
   x.fillStyle=mainColor;x.fillRect(0,0,W,H*.13);
   txt(x,cut(tag,16),W*.07,H*.088,36*U,'#FFFFFF','left','600');
   drawProduct(x,prod,W*.07,H*.155,W*.86,H*.46,.92);
@@ -878,11 +965,11 @@ function paint(pos,p){
   x.fillStyle=$('brandColor').value||mainColor;rr(x,W*.07,H*.905,W*.44,H*.05,6*U);x.fill();
   txt(x,cut(badge,10),W*.29,H*.94,17*U,'#FFFFFF','center','500');
   if(b.audience&&!logo)txt(x,cut(b.audience,16),W*.55,H*.935,13*U,cfg.sub,'left','400');
-  if(logo){try{x.drawImage(logo,W*.78,H*.9,70*U,70*U*(logo.height/logo.width));}catch(e){}}
+  if(logo){try{x.drawImage(logo,W*.78,H*.9,70*U,70*U*(logo.height/logo.width));}catch(e){}used('Logo');}
   if(state.sw.aiMark&&!isGlobal)aiBadge(x,W,H,U);
   tags.push({t:'促销文案',c:''});
  }
- return {canvas:c,W:W,H:H,target:d.spec,notes:notes,tags:tags};
+ return {canvas:c,W:W,H:H,target:d.spec,notes:notes,tags:tags,sources:sources};
 }
 
 /* ---------- 生成 ---------- */
@@ -1029,6 +1116,7 @@ function openModal(g){
  info.appendChild(el('p',null,'目标规格：'+g.r.target));
  info.appendChild(el('p',null,'演示导出：'+g.r.W+' × '+g.r.H+' px · '+QUALITY[state.quality].n));
  info.appendChild(el('p',null,'平台规则：'+g.pos.rule));
+ info.appendChild(el('p',null,'融合来源：商品主体图'+(g.r.sources&&g.r.sources.length?' + '+g.r.sources.join(' + '):'（主图位仅主体图，参考图与文案全部拦截）')));
  var bb=brief();
  info.appendChild(el('p',null,'本次主张：'+(headline(themeCfg())||'—')));
  if(bb.benefits.length)info.appendChild(el('p',null,'应用要点：'+bb.benefits.slice(0,3).join(' / ')));
@@ -1128,6 +1216,7 @@ $('loadDemo').onclick=function(){
  toast(n?'已加载 '+n+' 张内置示例素材（带「示例」标识，可随时删除）':'示例素材已存在，可上传自己的图片替换');
 };
  ['pname','selling','customTag'].concat(BRIEF_FIELDS).forEach(function(k){$(k).addEventListener('input',changed);});
+ $('ruleHead').onclick=function(){$('ruleBox').classList.toggle('closed');};
  $('themeNew').onclick=function(){openThemeModal(null,null);};
  $('thSave').onclick=saveTheme;
  $('thCopy').onclick=function(){
