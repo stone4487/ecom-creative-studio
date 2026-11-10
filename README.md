@@ -4,6 +4,8 @@
 > 这个仓库用来讲清楚「要做什么、为什么这么做、上线前有什么坑」，不是成品仓库。
 > `index.html` 是纯前端原型：访客可以上传自己的产品图、填卖点、选主题和平台，页面会在浏览器本地按各平台版式**真实画出图片**，并支持逐张下载 PNG。图片不上传、不调用任何生成接口。输出是演示版式图，不是平台最终上架素材，也不含 AI 抠图与场景生成。
 
+**在线体验（可直接操作）：** https://stone4487.github.io/ecom-creative-studio/
+
 ## 一句话定位
 
 给电商卖家的微信小程序：上传一张商品实拍图、填清卖点和宣传主题，一次拿到按平台分好的整套素材（合规白底主图、场景主图、详情长图、种草海报），覆盖淘宝、京东、拼多多、抖音、小红书、亚马逊、TikTok Shop。也支持只单独生成某一种素材。
@@ -30,6 +32,17 @@
 
 另外，商品保真是生死线。端到端文生图会改掉 logo、颜色、形状和配件，卖家不敢上架。正确路线是以客户上传的实拍图为真值源：抠图 + 蒙版锁死商品主体，AI 只负责背景、场景、光影和排版。
 
+## 在线链接（已上线）
+
+| 用途 | 地址 |
+|---|---|
+| **可操作体验页**（发给别人看这个） | https://stone4487.github.io/ecom-creative-studio/ |
+| 仓库源码 | https://github.com/stone4487/ecom-creative-studio |
+
+仓库为 public，GitHub Pages 已从 `main` 分支根目录部署 `index.html`。后续本地改动只需 `git push`，Pages 会自动重新构建，一般 1–2 分钟内生效。
+
+体验页是纯前端单文件：访客上传的产品图只在浏览器本地参与 canvas 合成，不上传服务器、不调用任何 AI 接口，无后端、无密钥、零托管成本。
+
 ## 本地体验
 
 直接双击 `index.html` 即可，不需要起服务、不需要联网：
@@ -41,41 +54,7 @@ python -m http.server 8000
 
 体验路径：上传一张自己的产品图（不传就用内置示意商品）→ 改商品名和卖点 → 选主题 → 勾选平台 → 点「生成素材包」→ 逐张下载 PNG 或「下载全部」。也可以试试「去掉纯白背景」开关，看同一张图在不同平台版式里的差别。
 
-## 要拿到一个可以发给别人操作的链接
-
-### 需要你提供什么
-
-**只有一样是必须的：一个可用的 GitHub 认证。** 三选一：
-
-1. **推荐，最安全，不用把密钥交给我**：在你自己的终端跑 `gh auth login -h github.com` 重新登录 `stone4487`。当前 keyring 里的 token 已失效。
-2. 给我一个 fine-grained Personal Access Token，权限只开这个仓库的 Contents 读写。我用完即弃，不写进仓库文件、不打印到日志。
-3. 完全自己推：直接在你终端执行下面的两条命令，不需要给我任何东西。
-
-另外确认两件小事：仓库名（默认 `ecom-creative-studio`）、仓库设为 **public**。私有仓库能否开 Pages 取决于你的 GitHub 套餐，这一条我没核实，按 public 最稳。
-
-**不需要你提供**：服务器、域名、API key、图像模型、数据库。体验页是纯前端单文件，零后端零成本，GitHub Pages 免费托管。
-
-### 推送命令
-
-本机 Git 身份已配置为 `stone4487 <stone4487@users.noreply.github.com>`，仓库已在本地初始化并提交。复测结果：`github.com` 网页可通（200，走本地代理），但 `api.github.com` 超时，而 `gh` 创建仓库走的正是 api.github.com；加上 token 失效，**我这边目前推不上去**。如果你在自己终端能正常访问，方式 3 最省事：
-
-```bash
-cd "H:/AI工具/workbuddy/电商素材生成"
-gh auth login -h github.com
-gh repo create ecom-creative-studio --public --source=. --push
-```
-
-推上去之后，在仓库 **Settings → Pages → Deploy from a branch → main / root** 开启 Pages，页面链接才会生效。
-
-按仓库名推算，Pages 地址会是：
-
-```
-https://stone4487.github.io/ecom-creative-studio/
-```
-
-**注意：这是地址格式推算，不是已存在的链接。** 仓库未推送、Pages 未开启之前，这个 URL 打不开。换了仓库名，路径也要跟着改。
-
-### 发出去之前自检
+## 发出去之前自检
 
 - 打开 Pages 链接，上传一张图，点生成，下载一张 PNG，确认 canvas 没被浏览器拦截
 - 手机端打开看一眼布局
