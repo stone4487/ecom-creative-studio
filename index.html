@@ -40,6 +40,7 @@ button,input,select,textarea{font-family:inherit}
 .side-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:14px}
 .side-head h2{font-size:15px;font-weight:600;margin:0 0 2px}
 .side-head p{font-size:11px;color:var(--muted);margin:0}
+.side-acts{display:flex;gap:9px;flex-shrink:0;padding-top:2px}
 .sec{border:1px solid var(--line);border-radius:9px;margin-bottom:10px;overflow:hidden;background:var(--bg)}
 .sec-h{display:flex;align-items:center;gap:8px;padding:9px 12px;background:var(--surface);cursor:pointer;user-select:none}
 .sec-h b{font-size:12px;font-weight:600}
@@ -60,6 +61,8 @@ button,input,select,textarea{font-family:inherit}
 .slot-drop:hover,.slot-drop.drag{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
 .items{margin-top:7px;display:flex;flex-direction:column;gap:6px}
 .item{display:flex;gap:8px;padding:6px;border:1px solid var(--line2);border-radius:6px;background:var(--surface);position:relative}
+.item.demo{background:#fafaf7;border-style:dashed;border-color:#d8dde3}
+.demo-tag{display:inline-block;font-size:9px;color:#8b8375;background:#f2efe7;border-radius:3px;padding:1px 5px;margin-bottom:3px}
 .item img{width:38px;height:38px;object-fit:cover;border-radius:5px;background:#fff;border:1px solid var(--line);flex:0 0 auto}
 .item-main{min-width:0;flex:1}
 .item-name{font-size:10px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:180px}
@@ -230,7 +233,7 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--accent-soft);bor
   <aside class="sidebar" id="sidebar">
     <div class="side-head">
       <div><h2>新建素材任务</h2><p>一次配置，按素材位与平台生成整套素材</p></div>
-      <button class="mini" id="clearAssets">清空素材</button>
+      <div class="side-acts"><button class="mini" id="loadDemo">加载示例</button><button class="mini" id="clearAssets">清空素材</button></div>
     </div>
 
     <section class="sec" id="secAssets">
@@ -425,7 +428,18 @@ function pickedPlatforms(){return PLATFORMS.filter(function(p){return state.plat
 function pickedPositions(){return POSITIONS.filter(function(o){return state.positions[o.id];});}
 function estimate(){var n=0;pickedPlatforms().forEach(function(p){pickedPositions().forEach(function(o){if(p.pos.indexOf(o.id)>=0)n++;});});return n;}
 function itemsOf(slot){return state.items.filter(function(i){return i.slot===slot;});}
-function firstOf(slots){for(var i=0;i<slots.length;i++){var a=itemsOf(slots[i]);if(a.length)return a[0];}return null;}
+/* 真实素材优先于内置示例：避免示例图排在数组前面时被误当成商品真值源 */
+function firstOf(slots){
+ var sample=null;
+ for(var i=0;i<slots.length;i++){
+  var a=itemsOf(slots[i]);
+  for(var j=0;j<a.length;j++){
+   if(a[j].builtin){if(!sample)sample=a[j];continue;}
+   return a[j];
+  }
+ }
+ return sample;
+}
 
 /* ---------- 主题库 ---------- */
 function allThemes(){return THEME_PRESETS.concat(state.customThemes);}
@@ -593,11 +607,12 @@ function renderSlots(){
   var drop=el('div','slot-drop','点击或拖拽图片到这里'+(s.multi?'（可多选）':''));drop.dataset.act='add';drop.dataset.slot=s.id;wrap.appendChild(drop);
   var list=el('div','items');
   itemsOf(s.id).forEach(function(it){
-   var row=el('div','item');row.dataset.id=it.id;
+   var row=el('div','item'+(it.builtin?' demo':''));row.dataset.id=it.id;
    var im=el('img');im.alt=it.name;
    try{im.src=it.img.src?it.img.src:it.img.toDataURL('image/png');}catch(e){}
    row.appendChild(im);
    var main=el('div','item-main');
+   if(it.builtin)main.appendChild(el('span','demo-tag','示例 · 上传本槽位图片后自动替换'));
    main.appendChild(el('div','item-name',it.name));
    main.appendChild(el('div','item-meta','识别：'+it.kind+' · 白边 ' + Math.round(it.edgeWhite*100) + '%'));
    var r=el('div','item-row');
@@ -624,23 +639,35 @@ function addItem(img,name,slot,size,builtin){
 }
 function loadFiles(files,slot){
  if(!files||!files.length)return;
- var arr=Array.prototype.slice.call(files),pending=arr.length,done=0;
- var s=SLOT_DEF.filter(function(d){return d.id===slot;})[0];
+ var s=SLOT_DEF.filter(function(d){return d.id===slot;})[0]||{multi:false};
+ var arr=Array.prototype.slice.call(files);
  if(!s.multi)arr=arr.slice(0,1);
+ var pending=arr.length,done=0,replaced=0;
  arr.forEach(function(f){
-  if(!/^image\//.test(f.type)){toast(f.name+' 不是图片文件，已跳过');pending--;if(pending===0)finish();return;}
-  if(f.size>10*1024*1024){toast(f.name+' 超过 10MB，已跳过');pending--;if(pending===0)finish();return;}
+  if(!/^image\//.test(f.type)){toast(f.name+' 不是图片文件，已跳过');if(--pending===0)finish();return;}
+  if(f.size>10*1024*1024){toast(f.name+' 超过 10MB，已跳过');if(--pending===0)finish();return;}
   var r=new FileReader();
   r.onload=function(ev){
    var img=new Image();
-   img.onload=function(){if(!s.multi)state.items=state.items.filter(function(i){return i.slot!==slot;});addItem(img,f.name,slot,f.size);done++;if(--pending===0)finish();};
-   img.onerror=function(){pending--;if(--pending===0)finish();};
+   img.onload=function(){
+    /* 单选槽位：整槽替换；多选槽位：只撤掉本槽位的内置示例，保留用户自己上传的多张 */
+    if(!s.multi)state.items=state.items.filter(function(i){return i.slot!==slot;});
+    var before=state.items.length;
+    state.items=state.items.filter(function(i){return !(i.slot===slot&&i.builtin);});
+    replaced+=before-state.items.length;
+    addItem(img,f.name,slot,f.size);
+    done++;if(--pending===0)finish();
+   };
+   img.onerror=function(){toast(f.name+' 无法解析，已跳过');if(--pending===0)finish();};
    img.src=ev.target.result;
   };
-  r.onerror=function(){pending--;if(--pending===0)finish();};
+  r.onerror=function(){toast(f.name+' 读取失败，已跳过');if(--pending===0)finish();};
   r.readAsDataURL(f);
  });
- function finish(){renderSlots();renderPlan();refresh(true);if(done)toast('已载入 '+done+' 张素材，识别结果可手动改判');}
+ function finish(){
+  renderSlots();renderPlan();refresh(true);
+  if(done)toast('已载入 '+done+' 张素材'+(replaced?'，已自动替换 '+replaced+' 张内置示例':'')+'，识别结果可手动改判');
+ }
  if(!arr.length)finish();
 }
 
@@ -1092,7 +1119,14 @@ function bind(){
  });
  var pendingSlot='hero';
  $('fileInput').addEventListener('change',function(e){loadFiles(e.target.files,pendingSlot);e.target.value='';});
- $('clearAssets').onclick=function(){state.items=[];renderSlots();renderPlan();refresh(true);toast('已清空素材，将使用内置示意商品');};
+ $('clearAssets').onclick=function(){state.items=[];renderSlots();renderPlan();refresh(true);toast('已清空素材；未上传主体图时，预览仍会用内置示意商品占位');};
+$('loadDemo').onclick=function(){
+ var n=0;
+ if(!itemsOf('hero').length){addItem(defaultProduct(),'示例商品图（内置）','hero',0,true);n++;}
+ if(!itemsOf('scene').length){addItem(defaultScene(),'示例场景参考（内置）','scene',0,true);n++;}
+ renderSlots();renderPlan();refresh(true);
+ toast(n?'已加载 '+n+' 张内置示例素材（带「示例」标识，可随时删除）':'示例素材已存在，可上传自己的图片替换');
+};
  ['pname','selling','customTag'].concat(BRIEF_FIELDS).forEach(function(k){$(k).addEventListener('input',changed);});
  $('themeNew').onclick=function(){openThemeModal(null,null);};
  $('thSave').onclick=saveTheme;
