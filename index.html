@@ -3,218 +3,371 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>电商素材工作台 · 产品方案与可操作原型</title>
+<title>电商素材工作台 · Ecom Creative Studio</title>
 <style>
-:root{--bg:#ffffff;--surface:#f7f8fa;--line:#e4e7ec;--text:#1c2027;--muted:#5c6572;--accent:#185fa5;--accent-soft:#e6f1fb;--amber:#854f0b;--amber-soft:#faeeda}
+:root{--bg:#fff;--surface:#f7f8fa;--canvas:#f4f6f8;--line:#e4e7ec;--line2:#eef0f3;--text:#1c2027;--muted:#66707d;--accent:#185fa5;--accent-soft:#e8f2fc;--ok:#2f9e6b;--ok-soft:#e6f5ed;--warn:#b8790f;--warn-soft:#fff4e0;--danger:#c8443c}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;font-size:14px;line-height:1.7}
-.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
-header{border-bottom:1px solid var(--line);padding:40px 0 32px}
-.badge{display:inline-block;font-size:12px;padding:3px 10px;border-radius:20px;background:var(--amber-soft);color:var(--amber);margin-bottom:14px}
-h1{font-size:28px;font-weight:600;margin:0 0 10px;letter-spacing:-0.5px}
-.sub{color:var(--muted);margin:0;max-width:720px}
-.meta{margin-top:16px;font-size:12px;color:var(--muted)}
-section{padding:36px 0;border-bottom:1px solid var(--line)}
-h2{font-size:19px;font-weight:600;margin:0 0 6px}
-.lead{color:var(--muted);margin:0 0 22px;max-width:780px}
-.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
-.card{border:1px solid var(--line);border-radius:10px;padding:18px 20px;background:var(--bg)}
-.card h3{font-size:14px;font-weight:600;margin:0 0 8px}
-.card p{margin:0;color:var(--muted);font-size:13px}
-.num{display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;border-radius:6px;background:var(--accent-soft);color:var(--accent);font-size:12px;margin-right:8px}
-.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
-.flow .card{background:var(--surface);border:none}
-.flow .card span{display:block;font-size:12px;color:var(--accent);margin-bottom:6px}
-.demo{border:1px solid var(--line);border-radius:12px;overflow:hidden}
-.demo-bar{background:var(--surface);padding:12px 18px;border-bottom:1px solid var(--line);font-size:12px;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
-.demo-body{display:grid;grid-template-columns:320px 1fr}
-@media(max-width:760px){.demo-body{grid-template-columns:1fr}}
-.panel{padding:20px;border-right:1px solid var(--line)}
-@media(max-width:760px){.panel{border-right:none;border-bottom:1px solid var(--line)}}
-label{display:block;font-size:12px;color:var(--muted);margin:16px 0 6px}
-label:first-child{margin-top:0}
-input[type=text],textarea{width:100%;border:1px solid var(--line);border-radius:8px;padding:9px 11px;font-size:13px;font-family:inherit;background:var(--bg);color:var(--text)}
-textarea{resize:vertical;min-height:70px}
-input:focus,textarea:focus{outline:2px solid var(--accent-soft);border-color:var(--accent)}
-input[type=file]{width:100%;font-size:12px;color:var(--muted);border:1px dashed var(--line);border-radius:8px;padding:11px;background:var(--surface)}
-.hint{font-size:11px;color:var(--muted);margin-top:7px;line-height:1.5}
-label.check{display:flex;align-items:center;gap:7px;font-size:12px;margin-top:12px;cursor:pointer}
-label.check input{width:auto;margin:0}
-.mini{margin-top:8px;font-size:11px;padding:4px 9px;border-radius:6px;border:1px solid var(--line);background:var(--bg);color:var(--muted);cursor:pointer;font-family:inherit}
-.chips{display:flex;flex-wrap:wrap;gap:7px}
-.chip{font-size:12px;padding:5px 11px;border-radius:20px;border:1px solid var(--line);background:var(--bg);color:var(--muted);cursor:pointer;user-select:none}
-.chip.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
-.btn{width:100%;margin-top:20px;padding:10px;border-radius:8px;border:1px solid var(--accent);background:var(--accent);color:#fff;font-size:13px;font-family:inherit;cursor:pointer}
-.btn:disabled{opacity:.55;cursor:default}
-.result{padding:20px;min-height:340px}
-.empty{color:var(--muted);font-size:13px;padding:60px 10px;text-align:center}
-.tools{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px;font-size:12px;color:var(--muted)}
-.dlall{font-size:12px;padding:6px 12px;border-radius:7px;border:1px solid var(--accent);background:var(--bg);color:var(--accent);cursor:pointer;font-family:inherit}
-.assets{display:grid;grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:10px}
-.asset{border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--bg)}
-.asset canvas{display:block;width:100%;height:auto;background:#fff}
-.asset .info{padding:9px 11px}
-.asset b{display:block;font-size:12px;font-weight:600;line-height:1.4}
-.asset small{display:block;color:var(--muted);font-size:11px;margin-top:3px}
-.dl{display:block;width:100%;margin-top:8px;font-size:11px;padding:5px;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--accent);cursor:pointer;font-family:inherit}
-table{width:100%;border-collapse:collapse;font-size:13px}
-th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
-th{color:var(--muted);font-weight:500;font-size:12px;background:var(--surface)}
-td:first-child{white-space:nowrap}
-.tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:5px;background:var(--amber-soft);color:var(--amber)}
-.note{background:var(--surface);border-left:3px solid var(--accent);padding:14px 18px;font-size:13px;color:var(--muted);border-radius:0 8px 8px 0;margin-top:18px}
-ul{margin:10px 0 0;padding-left:20px;color:var(--muted);font-size:13px}
-li{margin:5px 0}
-footer{padding:28px 0 48px;color:var(--muted);font-size:12px}
-a{color:var(--accent)}
+body{margin:0;background:var(--canvas);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;font-size:13px;line-height:1.55}
+button,input,select,textarea{font-family:inherit}
+.topbar{height:56px;background:var(--bg);border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 22px;gap:26px;position:sticky;top:0;z-index:20}
+.brand{display:flex;align-items:center;gap:10px;flex:0 0 auto}
+.mark{width:30px;height:30px;border-radius:8px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;letter-spacing:.5px}
+.brand b{display:block;font-size:14px;font-weight:600;line-height:1.2}
+.brand small{display:block;font-size:10px;color:var(--muted);letter-spacing:.4px}
+.crumb{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:8px;min-width:0}
+.crumb i{font-style:normal;color:#c3c9d2}
+.crumb b{color:var(--text);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:230px}
+.topright{margin-left:auto;display:flex;align-items:center;gap:9px;flex:0 0 auto}
+.envtag{font-size:10px;padding:3px 8px;border-radius:5px;background:var(--warn-soft);color:var(--warn);border:1px solid #f1dfba;font-weight:500}
+.tbtn{font-size:12px;padding:6px 11px;border-radius:7px;border:1px solid var(--line);background:var(--bg);color:var(--text);cursor:pointer;white-space:nowrap}
+.tbtn:hover{border-color:var(--accent);color:var(--accent)}
+.tbtn.primary{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:500}
+.tbtn.primary:hover{background:#12508d;color:#fff}
+.tbtn:disabled{opacity:.45;cursor:not-allowed}
+.avatar{width:27px;height:27px;border-radius:50%;background:#dce8f4;color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600}
+.subbar{height:38px;background:var(--bg);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 22px;position:sticky;top:56px;z-index:19}
+.steps{display:flex;align-items:center;gap:0}
+.step{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:6px;padding-right:16px;margin-right:16px;border-right:1px solid var(--line)}
+.step:last-child{border-right:0}
+.step em{width:16px;height:16px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-style:normal;font-size:10px;display:flex;align-items:center;justify-content:center;font-weight:600}
+.step.done em{background:var(--ok-soft);color:var(--ok)}
+.subright{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:10px}
+.sep{width:1px;height:12px;background:var(--line)}
+.workspace{display:grid;grid-template-columns:378px minmax(0,1fr);align-items:start}
+@media(max-width:980px){.workspace{grid-template-columns:1fr}.sidebar{position:static!important;height:auto!important;border-right:0;border-bottom:1px solid var(--line)}}
+.sidebar{background:var(--bg);border-right:1px solid var(--line);padding:18px 18px 24px;position:sticky;top:94px;height:calc(100vh - 94px);overflow-y:auto}
+.sidebar::-webkit-scrollbar{width:7px}.sidebar::-webkit-scrollbar-thumb{background:#d9dee5;border-radius:4px}
+.side-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:14px}
+.side-head h2{font-size:15px;font-weight:600;margin:0 0 2px}
+.side-head p{font-size:11px;color:var(--muted);margin:0}
+.sec{border:1px solid var(--line);border-radius:9px;margin-bottom:10px;overflow:hidden;background:var(--bg)}
+.sec-h{display:flex;align-items:center;gap:8px;padding:9px 12px;background:var(--surface);cursor:pointer;user-select:none}
+.sec-h b{font-size:12px;font-weight:600}
+.sec-h .cnt{font-size:10px;color:var(--muted);margin-left:auto}
+.sec-h .caret{font-size:10px;color:var(--muted);transition:transform .15s}
+.sec.closed .caret{transform:rotate(-90deg)}
+.sec.closed .sec-b{display:none}
+.sec-b{padding:12px}
+.notice{font-size:10px;color:var(--muted);background:var(--surface);border-radius:6px;padding:6px 8px;margin-bottom:10px;line-height:1.5}
+.slot{border:1px solid var(--line);border-radius:8px;padding:9px;margin-bottom:8px;background:var(--bg)}
+.slot:last-child{margin-bottom:0}
+.slot-h{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.slot-h b{font-size:11px;font-weight:600}
+.slot-h .tip{font-size:10px;color:var(--muted)}
+.slot-h .req{font-size:9px;color:var(--danger);border:1px solid #f0d2d0;border-radius:4px;padding:0 4px}
+.slot-h .add{margin-left:auto;font-size:10px;color:var(--accent);background:none;border:0;cursor:pointer;padding:2px 0}
+.slot-drop{border:1px dashed #cdd5de;border-radius:6px;padding:7px;text-align:center;font-size:10px;color:var(--muted);cursor:pointer;background:#fcfdfe}
+.slot-drop:hover,.slot-drop.drag{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+.items{margin-top:7px;display:flex;flex-direction:column;gap:6px}
+.item{display:flex;gap:8px;padding:6px;border:1px solid var(--line2);border-radius:6px;background:var(--surface);position:relative}
+.item img{width:38px;height:38px;object-fit:cover;border-radius:5px;background:#fff;border:1px solid var(--line);flex:0 0 auto}
+.item-main{min-width:0;flex:1}
+.item-name{font-size:10px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:180px}
+.item-meta{font-size:9px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.item-row{display:flex;align-items:center;gap:5px;margin-top:3px;flex-wrap:wrap}
+.kindsel{font-size:9px;padding:1px 3px;border:1px solid var(--line);border-radius:4px;background:#fff;color:var(--text);max-width:112px}
+.plan-tags{display:flex;flex-wrap:wrap;gap:3px;margin-top:3px}
+.ptag{font-size:9px;padding:1px 5px;border-radius:3px;background:var(--accent-soft);color:var(--accent);white-space:nowrap}
+.ptag.warn{background:var(--warn-soft);color:var(--warn)}
+.lic{font-size:9px;color:var(--muted);display:flex;align-items:center;gap:3px;cursor:pointer;margin-top:3px}
+.lic input{margin:0;width:auto;accent-color:var(--accent)}
+.item-del{position:absolute;top:4px;right:4px;border:0;background:none;color:#aab2bd;cursor:pointer;font-size:13px;line-height:1;padding:2px}
+.item-del:hover{color:var(--danger)}
+.field{margin-bottom:10px}
+.field:last-child{margin-bottom:0}
+label{display:block;font-size:10px;color:var(--muted);margin:0 0 4px}
+input[type=text],textarea,select{width:100%;border:1px solid var(--line);border-radius:6px;padding:7px 9px;font-size:11px;background:var(--bg);color:var(--text)}
+textarea{resize:vertical;min-height:58px;line-height:1.5}
+input:focus,textarea:focus,select:focus{outline:2px solid var(--accent-soft);border-color:var(--accent)}
+.inline{display:flex;gap:8px;align-items:center}
+.inline input[type=color]{width:32px;height:30px;padding:1px;border:1px solid var(--line);border-radius:6px;background:#fff;cursor:pointer}
+.chips{display:flex;flex-wrap:wrap;gap:5px}
+.chip{font-size:10px;padding:4px 8px;border-radius:6px;border:1px solid var(--line);background:var(--bg);color:var(--muted);cursor:pointer;user-select:none}
+.chip:hover{border-color:var(--accent);color:var(--accent)}
+.chip.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent);font-weight:500}
+.mini{font-size:10px;color:var(--accent);background:none;border:0;cursor:pointer;padding:0}
+.chkrow{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:5px 0;border-bottom:1px solid var(--line2)}
+.chkrow:last-child{border-bottom:0}
+.chkrow label{font-size:10px;color:var(--muted);margin:0;cursor:pointer}
+.chkrow .sw{width:28px;height:16px;border-radius:9px;background:#d5dbe3;position:relative;cursor:pointer;flex:0 0 auto;transition:background .15s}
+.chkrow .sw i{position:absolute;top:2px;left:2px;width:12px;height:12px;border-radius:50%;background:#fff;transition:left .15s}
+.chkrow .sw.on{background:var(--accent)}
+.chkrow .sw.on i{left:14px}
+.poslist{display:flex;flex-direction:column;gap:2px}
+.posrow{display:flex;align-items:center;gap:7px;padding:5px 6px;border-radius:5px;cursor:pointer}
+.posrow:hover{background:var(--surface)}
+.posrow input{margin:0;width:auto;accent-color:var(--accent)}
+.posrow b{font-size:10px;font-weight:500}
+.posrow span{font-size:9px;color:var(--muted);margin-left:auto;white-space:nowrap}
+.seg{display:flex;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.seg button{flex:1;font-size:10px;padding:5px 2px;border:0;border-right:1px solid var(--line);background:var(--bg);color:var(--muted);cursor:pointer}
+.seg button:last-child{border-right:0}
+.seg button.on{background:var(--accent-soft);color:var(--accent);font-weight:600}
+.plan{display:flex;flex-direction:column;gap:0}
+.pstep{display:flex;gap:8px;font-size:10px;padding:5px 0;border-bottom:1px dashed var(--line2)}
+.pstep:last-child{border-bottom:0}
+.pdot{width:6px;height:6px;border-radius:50%;background:var(--ok);flex:0 0 auto;margin-top:5px}
+.pdot.off{background:#c9d0d8}
+.pstep b{font-weight:500;flex:0 0 62px}
+.pstep span{color:var(--muted);min-width:0}
+.side-foot{position:sticky;bottom:-24px;background:var(--bg);padding:10px 0 4px;border-top:1px solid var(--line);margin-top:12px}
+.est{font-size:11px;font-weight:600;margin-bottom:7px;display:flex;justify-content:space-between}
+.est span{font-weight:400;color:var(--muted);font-size:10px}
+.btn{width:100%;padding:10px;border:0;border-radius:7px;background:var(--accent);color:#fff;font-size:12px;font-weight:600;cursor:pointer}
+.btn:hover{background:#12508d}
+.btn:disabled{background:#a8b6c4;cursor:not-allowed}
+.foot-hint{font-size:9px;color:var(--muted);text-align:center;margin-top:6px;min-height:12px}
+.content{padding:20px 24px 44px;min-width:0}
+.content-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:12px}
+.content-head h2{font-size:17px;font-weight:600;margin:0 0 3px;display:flex;align-items:center;gap:8px}
+.countbadge{font-size:10px;font-weight:600;background:var(--accent-soft);color:var(--accent);border-radius:10px;padding:1px 7px}
+#stat{font-size:11px;color:var(--muted);margin:0}
+.tools{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.tools select{width:auto;min-width:104px;padding:6px 8px;font-size:11px}
+.tools .seg{width:auto}
+.tools .seg button{padding:6px 10px;font-size:10px;flex:0 0 auto}
+.progress{display:none;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 13px;margin-bottom:12px}
+.progress.show{display:block}
+.pbar{height:5px;border-radius:3px;background:var(--line2);overflow:hidden;margin-bottom:7px}
+.pbar i{display:block;height:100%;width:0;background:var(--accent);transition:width .16s}
+#pText{font-size:10px;color:var(--muted)}
+.group{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px 16px 16px;margin-bottom:12px}
+.group-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;padding-bottom:9px;margin-bottom:12px;border-bottom:1px solid var(--line)}
+.group-head b{font-size:12px;font-weight:600}
+.group-rule{font-size:10px;color:var(--muted)}
+.group-head .n{font-size:10px;color:var(--accent);margin-left:auto;background:var(--accent-soft);padding:1px 7px;border-radius:9px}
+.assets{display:grid;grid-template-columns:repeat(auto-fill,minmax(152px,1fr));gap:10px}
+.assets.list{grid-template-columns:1fr}
+.asset{border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--bg);min-width:0}
+.asset canvas{display:block;width:100%;height:158px;object-fit:contain;background:#fff;cursor:zoom-in}
+.assets.list .asset{display:flex;gap:12px;padding:9px;align-items:center}
+.assets.list .asset canvas{width:92px;height:92px;flex:0 0 auto}
+.assets.list .info{flex:1;padding:0}
+.info{padding:8px 9px 9px}
+.info b{display:block;font-size:11px;font-weight:600;line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.info small{display:block;color:var(--muted);font-size:9px;margin-top:2px;line-height:1.4}
+.tags{display:flex;flex-wrap:wrap;gap:3px;margin-top:5px}
+.tag{font-size:9px;padding:1px 5px;border-radius:3px;background:var(--surface);color:var(--muted);border:1px solid var(--line2)}
+.tag.ok{background:var(--ok-soft);color:var(--ok);border-color:#c9e9d8}
+.tag.warn{background:var(--warn-soft);color:var(--warn);border-color:#f1dfba}
+.dlrow{display:flex;gap:5px;margin-top:7px}
+.dl{flex:1;font-size:10px;padding:5px 2px;border-radius:5px;border:1px solid var(--line);background:var(--surface);color:var(--accent);cursor:pointer}
+.dl:hover{background:var(--accent-soft);border-color:var(--accent)}
+.dl.zoom{flex:0 0 28px}
+.empty{color:var(--muted);font-size:12px;padding:64px 12px;text-align:center;background:var(--bg);border:1px dashed var(--line);border-radius:10px;line-height:1.8}
+.legal{padding:11px 22px;border-top:1px solid var(--line);background:var(--bg);font-size:10px;color:var(--muted);text-align:center;line-height:1.6}
+.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(14px);background:#252b33;color:#fff;font-size:12px;padding:9px 16px;border-radius:7px;opacity:0;pointer-events:none;transition:all .2s;z-index:60;box-shadow:0 6px 20px rgba(0,0,0,.18)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.modal{position:fixed;inset:0;background:rgba(20,26,34,.62);display:none;align-items:center;justify-content:center;z-index:50;padding:26px}
+.modal.show{display:flex}
+.modal-box{background:#fff;border-radius:12px;max-width:820px;width:100%;max-height:90vh;display:flex;gap:18px;padding:18px;overflow:auto}
+.modal-img{flex:0 0 auto;max-width:400px;max-height:76vh;object-fit:contain;background:#f7f8fa;border:1px solid var(--line);border-radius:8px}
+.modal-info{flex:1;min-width:180px;font-size:12px}
+.modal-info h3{margin:0 0 10px;font-size:15px}
+.modal-info p{margin:0 0 7px;color:var(--muted);font-size:11px;line-height:1.6}
+.modal-info .tbtn{margin-top:12px;margin-right:6px}
+.dropdown{position:absolute;top:50px;right:22px;width:268px;background:#fff;border:1px solid var(--line);border-radius:9px;box-shadow:0 10px 30px rgba(20,30,45,.14);display:none;z-index:40;padding:7px}
+.dropdown.show{display:block}
+.dd-title{font-size:10px;color:var(--muted);padding:5px 8px}
+.dd-item{padding:7px 9px;border-radius:6px;cursor:pointer;font-size:11px}
+.dd-item:hover{background:var(--surface)}
+.dd-item b{display:block;font-weight:500}
+.dd-item span{display:block;font-size:9px;color:var(--muted)}
+.dd-empty{font-size:11px;color:var(--muted);padding:12px 9px}
+.flash{animation:fl .6s ease 2}@keyframes fl{50%{box-shadow:0 0 0 2px var(--danger) inset}}
 </style>
 </head>
 <body>
-<div class="wrap">
 
-<header>
-  <span class="badge">方案与可操作原型 · 暂无可运行的小程序代码</span>
-  <h1>电商素材工作台</h1>
-  <p class="sub">上传一张商品实拍图，填清卖点和宣传主题，一次拿到按平台分好的整套素材：合规白底主图、场景主图、详情长图、种草海报。面向淘宝、京东、拼多多、抖音、小红书、亚马逊、TikTok Shop。</p>
-  <p class="meta">这个页面在浏览器本地完成版式合成，图片不会上传到任何服务器。输出的是演示版式图，不是平台最终上架素材，也不含 AI 抠图与场景生成。</p>
+<header class="topbar">
+  <div class="brand"><span class="mark">EC</span><div><b>电商素材工作台</b><small>Ecom Creative Studio</small></div></div>
+  <div class="crumb"><span>工作台</span><i>/</i><b id="taskName">新建素材任务</b></div>
+  <div class="topright">
+    <span class="envtag">演示环境</span>
+    <button class="tbtn" id="saveDraft">保存草稿</button>
+    <button class="tbtn" id="historyBtn">历史任务 <span id="histCount">0</span></button>
+    <span class="avatar">S</span>
+  </div>
 </header>
 
-<section>
-  <h2>先解决什么</h2>
-  <p class="lead">同一个商品铺 7 个平台，卖家现在要重复做 20 张以上的图。痛的不是「不会做图」，是规则太碎。</p>
-  <div class="grid3">
-    <div class="card"><h3><span class="num">1</span>规格不一样</h3><p>国内主图普遍 1:1，小红书要 3:4，亚马逊要 1600px 以上纯白底。同一张图硬裁就切掉商品，拉伸就变形。</p></div>
-    <div class="card"><h3><span class="num">2</span>规则互相打架</h3><p>亚马逊和 TikTok Shop 主图禁任何文字和水印，双十一海报全靠促销文案。一套图不可能通吃，必须分层输出。</p></div>
-    <div class="card"><h3><span class="num">3</span>商品不能画歪</h3><p>端到端文生图会改 logo、颜色、配件，卖家不敢上架。必须以实拍图为真值源，AI 只碰背景和排版。</p></div>
+<div class="subbar">
+  <div class="steps">
+    <span class="step done"><em>1</em>素材准备</span>
+    <span class="step done"><em>2</em>任务配置</span>
+    <span class="step"><em>3</em>生成与导出</span>
   </div>
-</section>
+  <div class="subright"><span id="taskId"></span><span class="sep"></span><span id="topStat"></span></div>
+</div>
 
-<section>
-  <h2>生成链路</h2>
-  <p class="lead">一次输入，三层处理，按平台分发成素材包，而不是产出一张「万能图」。</p>
-  <div class="flow">
-    <div class="card"><span>输入</span><h3>卖点 · 素材图 · 主题 · 平台</h3><p>客户填产品功能、上传实拍图或已有素材、选节日主题与投放平台。</p></div>
-    <div class="card"><span>第一层</span><h3>商品保真</h3><p>抠图并用蒙版锁死商品主体，原图的形状、logo、颜色、配件不参与生成。</p></div>
-    <div class="card"><span>第二层</span><h3>文案与模板</h3><p>卖点转标题、详情模块文案、种草脚本；按主题套视觉模板和排版。</p></div>
-    <div class="card"><span>第三层</span><h3>规则与导出</h3><p>校验尺寸、白底 RGB、商品占比、文字占比、禁用词，注入 AI 标识后打包。</p></div>
-  </div>
-  <div class="note">技术边界：WorkBuddy 云服务提供数据库、登录、文件存储和大模型调用，<b>不含图像生成</b>。抠图、场景生成、超分和模板合成需要外接图像 API，这部分是成本大头。整套 20–40 张图属分钟级任务，小程序端必须走异步队列 + 进度通知。</div>
-</section>
+<div class="dropdown" id="histMenu"><div class="dd-title">最近保存的任务配置（不含图片）</div><div id="histList"></div></div>
 
-<section>
-  <h2>动手试一下</h2>
-  <p class="lead">上传自己的产品图（不传就用内置示例），填卖点、选主题和平台，页面会按各平台版式<b>真实画出图片</b>，可逐张下载 PNG。纯前端合成，图片不上传、不调用任何接口；用来对齐产品形态，不代表真实生成能力。</p>
-  <div class="demo">
-    <div class="demo-bar"><span>纯前端版式演示 · 图片不上传服务器</span><span id="stat">已选 0 个平台 · 预计 0 张</span></div>
-    <div class="demo-body">
-      <div class="panel">
-        <label>商品名称</label>
-        <input type="text" id="pname" value="便携保温杯 450ml">
-        <label>核心卖点（用顿号或逗号分隔）</label>
-        <textarea id="selling">6 小时保温、单手开盖、316 不锈钢内胆、杯身 210g</textarea>
-        <label>商品图片</label>
-        <input type="file" id="fileInput" accept="image/*">
-        <div class="hint" id="uploadHint">当前使用内置示意商品图。支持 JPG / PNG，建议 ≤8MB。</div>
-        <label class="check"><input type="checkbox" id="cutWhite"> 尝试去掉纯白背景（仅对白底实拍图有效）</label>
-        <button class="mini" id="resetImg">恢复示例图</button>
-        <label>宣传主题</label>
-        <div class="chips" id="themeChips"></div>
-        <label>目标平台</label>
-        <div class="chips" id="platformChips"></div>
-        <button class="btn" id="genBtn">生成素材包</button>
+<main class="workspace">
+  <aside class="sidebar" id="sidebar">
+    <div class="side-head">
+      <div><h2>新建素材任务</h2><p>一次配置，按素材位与平台生成整套素材</p></div>
+      <button class="mini" id="clearAssets">清空素材</button>
+    </div>
+
+    <section class="sec" id="secAssets">
+      <div class="sec-h"><span class="caret">▾</span><b>① 素材上传与识别</b><span class="cnt" id="assetCount">0 张</span></div>
+      <div class="sec-b">
+        <div class="notice">不同图片承担不同角色：主体图锁商品像素，参考图只影响背景与风格。识别结果可手动改判。</div>
+        <div id="slots"></div>
       </div>
-      <div class="result" id="result">
-        <div class="empty">左侧选好平台和主题，点「生成素材包」就能看到并下载结果。</div>
+    </section>
+
+    <section class="sec" id="secInfo">
+      <div class="sec-h"><span class="caret">▾</span><b>② 商品信息</b></div>
+      <div class="sec-b">
+        <div class="field"><label>商品名称</label><input type="text" id="pname" value="便携保温杯 450ml"></div>
+        <div class="field"><label>商品类目</label><select id="category"><option>家居日用</option><option>美妆个护</option><option>服饰鞋包</option><option>数码配件</option><option>食品饮料</option><option>母婴宠物</option></select></div>
+        <div class="field"><label>核心卖点（顿号、逗号或换行分隔）</label><textarea id="selling">6 小时保温、单手开盖、316 不锈钢内胆、杯身 210g</textarea></div>
+        <div class="field"><label>品牌主色 / 自定义主题词</label><div class="inline"><input type="color" id="brandColor" value="#C8202E"><input type="text" id="customTag" value="" placeholder="留空则使用主题默认文案"></div></div>
+      </div>
+    </section>
+
+    <section class="sec" id="secGen">
+      <div class="sec-h"><span class="caret">▾</span><b>③ 生成设置</b></div>
+      <div class="sec-b">
+        <div class="field"><label>宣传主题</label><div class="chips" id="themeChips"></div></div>
+        <div class="field"><label>投放平台 <button class="mini" id="platAll" style="margin-left:6px">全选</button> <button class="mini" id="platNone">清空</button></label><div class="chips" id="platformChips"></div></div>
+        <div class="field"><label>生成素材位</label><div class="poslist" id="posList"></div></div>
+        <div class="field"><label>输出档位（影响演示导出像素）</label><div class="seg" id="qualitySeg"></div></div>
+        <div class="field" style="margin-top:10px"><label>处理开关</label><div id="switches"></div></div>
+      </div>
+    </section>
+
+    <section class="sec" id="secLegal">
+      <div class="sec-h"><span class="caret">▾</span><b>④ 授权与留痕</b><span class="cnt" id="legalState">待确认</span></div>
+      <div class="sec-b">
+        <div class="chkrow"><label for="licA">我拥有上传素材的版权，或已取得书面授权</label><input type="checkbox" id="licA" checked></div>
+        <div class="chkrow"><label for="licB">旧成品图去文字 / 去水印仅限自有素材</label><input type="checkbox" id="licB" checked></div>
+        <div class="notice" style="margin:8px 0 0">确认记录会写入本次任务留痕，保存在本机浏览器。</div>
+      </div>
+    </section>
+
+    <section class="sec" id="secPlan">
+      <div class="sec-h"><span class="caret">▾</span><b>⑤ 处理计划</b></div>
+      <div class="sec-b"><div class="plan" id="planList"></div></div>
+    </section>
+
+    <div class="side-foot">
+      <div class="est"><span id="estText">预计 0 张</span><span id="estDetail"></span></div>
+      <button class="btn" id="genBtn">生成素材包</button>
+      <div class="foot-hint" id="genHint">配置变更会自动刷新预览</div>
+    </div>
+  </aside>
+
+  <section class="content">
+    <div class="content-head">
+      <div><h2>素材包 <span class="countbadge" id="pkgCount">0</span></h2><p id="stat">—</p></div>
+      <div class="tools">
+        <select id="filterPos"><option value="all">全部素材位</option></select>
+        <select id="filterPlat"><option value="all">全部平台</option></select>
+        <div class="seg" id="viewSeg"><button data-v="grid" class="on">网格</button><button data-v="list">列表</button></div>
+        <button class="tbtn primary" id="dlZip">下载素材包 ZIP</button>
+        <button class="tbtn" id="dlAll">逐张下载 PNG</button>
       </div>
     </div>
-  </div>
-  <div class="note">演示边界：这里的「白底主图」只是把商品放在纯白画布上，没有智能抠图；「场景主图」是套色块模板，不是 AI 生成场景。真实产品里这两步要接图像 API。演示画布为了浏览器流畅做了缩小，目标规格见下表。</div>
-</section>
 
-<section>
-  <h2>平台规格矩阵</h2>
-  <p class="lead">常见基准值，用于规则引擎的初始配置。<b>规则会变，正式出图前必须到各平台卖家后台复核</b>；大促期间尤其容易调整。</p>
-  <table>
-    <thead><tr><th>平台</th><th>主图规格</th><th>硬约束</th><th>输出素材</th></tr></thead>
-    <tbody id="specBody"></tbody>
-  </table>
-  <div class="note">来源：标记侠规格库 biaojixia.com/specs、Product Scene productscene.com/requirements（自称逐平台核对帮助页）、禾石商业摄影 2026-06 跨境平台对比。复核渠道：各平台卖家后台「图片规范」、Amazon Seller Central 产品图片指南、TikTok Shop Seller Center。二手文章错误较多，不能作为规则引擎的唯一依据。</div>
-</section>
+    <div class="progress" id="progress"><div class="pbar"><i id="pbarFill"></i></div><span id="pText">准备中…</span></div>
 
-<section>
-  <h2>路线图</h2>
-  <table>
-    <thead><tr><th>阶段</th><th>范围</th><th>验证目标</th></tr></thead>
-    <tbody>
-      <tr><td>P0</td><td>1 张实拍图 + 卖点 + 1 个主题 → 白底主图 ×1、场景主图 ×2、详情长图 ×1；先做淘宝 + 拼多多</td><td>商品不变形、能直接导出上架</td></tr>
-      <tr><td>P1</td><td>加小红书种草图 + 节日主题模板库</td><td>模板复用率、风格一致性</td></tr>
-      <tr><td>P2</td><td>跨境：亚马逊纯白底校验 + TikTok Shop</td><td>AI 标识与平台规则的冲突如何落地</td></tr>
-      <tr><td>P3</td><td>账号、额度计费、批量 SKU、团队空间</td><td>商业化闭环</td></tr>
-    </tbody>
-  </table>
-</section>
+    <div id="result"></div>
+  </section>
+</main>
 
-<section>
-  <h2>上线前必须处理的合规项</h2>
-  <ul>
-    <li><span class="tag">已核实</span> 《人工智能生成合成内容标识办法》与配套强制性国标 2025-09-01 施行：图片需显著显式标识，文件元数据需隐式标识（AIGC 字段、服务提供者、内容编号）；提供下载导出时要确保文件里含显式标识。来源：中国政府网、新华网、网信网。</li>
-    <li><span class="tag">已核实</span> 微信小程序须企业主体 + 「深度合成 - AI 绘画 / AI 创作」类目；用第三方模型要提供技术方《互联网信息服务算法备案》（生成合成类）及双方盖章合作协议（含算法名称或备案编号）；生成页显著标注「AI 生成」。来源：微信开放社区官方答复。个人主体无法申请。</li>
-    <li><span class="tag">待法务确认</span> 国内法规要求导出的 AI 图片带显式标识，但亚马逊 / TikTok Shop 主图禁止任何文字、水印、logo，两条要求直接冲突。目前没有确定解法，不能假设某种折中做法合规。</li>
-    <li><span class="tag">需复核</span> 平台自身政策：亚马逊 2026-08 起含 AI 生成逼真人物的素材需加元数据标签；TikTok Shop 要求 AI 内容标注且禁止用 AI 改变商品外观或虚构功效。来自媒体报道，具体条款以卖家后台为准。</li>
-    <li><span class="tag">需复核</span> 客户上传素材的商用授权、字体与模板版权、平台违禁词库，都要在产品里留痕。</li>
-  </ul>
-</section>
-
-<footer>
-  <p>仓库状态：产品方案阶段。所有「已核实」条目均附来源；路线图、成本判断和平台取舍属于规划与推测，不是已上线事实。</p>
-  <p>完整需求见 <a href="docs/PRD.md">docs/PRD.md</a>，合规清单见 <a href="docs/compliance.md">docs/compliance.md</a>。</p>
+<footer class="legal">
+  演示原型 · 素材图仅在浏览器本地参与合成，不上传服务器；识别、抠图、去文字与融合为前端近似演示，未接入 AI 模型；输出为版式样张，非平台最终上架素材；暂无可运行的小程序代码。
 </footer>
 
-</div>
+<div class="toast" id="toast"></div>
+<div class="modal" id="modal"><div class="modal-box"><img class="modal-img" id="modalImg" alt="素材大图"><div class="modal-info" id="modalInfo"></div></div></div>
+<input type="file" id="fileInput" accept="image/*" hidden>
+
 <script>
+/* ---------- 常量 ---------- */
+var SLOT_DEF=[
+ {id:'hero',name:'商品主体图',tip:'真值源 · 商品像素不改',req:true,multi:true},
+ {id:'detail',name:'多角度 / 细节图',tip:'补充主体参考',multi:true},
+ {id:'model',name:'人物 / 模特参考',tip:'仅用于副图、种草、海报位',multi:true},
+ {id:'scene',name:'场景 / 道具 / 光影参考',tip:'控制背景与光向',multi:true},
+ {id:'brand',name:'品牌资产（Logo）',tip:'用于海报与详情',multi:false},
+ {id:'recycle',name:'旧成品素材回收',tip:'去文字 → 抠主体 → 重排版',multi:true}
+];
+var KINDS=['白底图','带背景实拍','成品图','人物参考','场景参考','品牌资产','待判定'];
+var PLAN={
+ '白底图':['主体提取','锁为真值源','按素材位导出'],
+ '带背景实拍':['抠图 + 蒙版锁主体','重光照 / 接触阴影','按素材位导出'],
+ '成品图':['裁切去除原有文案区','抠出主体','重新排版'],
+ '人物参考':['姿态与光影解析','仅进副图 / 种草 / 海报位'],
+ '场景参考':['背景与光向提取','参与副图 / 海报合成'],
+ '品牌资产':['Logo 与色值注入','用于海报与详情'],
+ '待判定':['需人工改判后处理']
+};
 var PLATFORMS=[
- {id:'taobao',name:'淘宝/天猫',spec:'1200×1200',vspec:'750×1000',rule:'主图 1:1，≥800×800，建议 1200×1200；最多 5 张，第 5 张建议白底',dw:800,dh:800,vw:540,vh:720,assets:['白底主图','场景主图','详情长图']},
- {id:'jd',name:'京东',spec:'1200×1200',vspec:'750×1000',rule:'主图 1:1，≥800×800；首图建议白底，详情宽 790 / 移动 750',dw:800,dh:800,vw:540,vh:720,assets:['白底主图','场景主图','详情长图']},
- {id:'pdd',name:'拼多多',spec:'1000×1000',vspec:'750×1000',rule:'主图 1:1，≥750×750；文字覆盖过多会限流，详情宽 750',dw:800,dh:800,vw:540,vh:720,assets:['白底主图','场景主图','详情长图']},
- {id:'douyin',name:'抖音/抖店',spec:'800×800 或 750×1000',vspec:'1080×1440',rule:'主图 1:1 或 3:4；最多 9 张，信息流偏竖版，主图视频用 9:16',dw:750,dh:1000,vw:540,vh:720,assets:['场景主图','详情长图','竖版海报']},
- {id:'xhs',name:'小红书',spec:'1080×1440',vspec:'1080×1440',rule:'竖版 3:4；整篇笔记只能一种比例，图文最多 18 张',dw:540,dh:720,vw:540,vh:720,assets:['种草图','竖版海报']},
- {id:'amazon',name:'亚马逊',spec:'2000×2000',vspec:'2000×2000',rule:'主图纯白 RGB 255,255,255、商品占 ≥85%、禁文字/logo/水印/道具；长边 ≥1000',dw:900,dh:900,vw:540,vh:720,assets:['白底主图','详情长图']},
- {id:'tiktok',name:'TikTok Shop',spec:'1080×1080',vspec:'1080×1920',rule:'主图纯白客观实拍、禁文字水印、商品占 ≥80%；≥600×600，最多 9 张',dw:800,dh:800,vw:540,vh:720,assets:['白底主图','场景主图']}
+ {id:'taobao',name:'淘宝/天猫',spec:'1200×1200',vspec:'750×1000',group:'cn',size:1200,pos:['main','sub','detail','poster']},
+ {id:'jd',name:'京东',spec:'1200×1200',vspec:'790×1000',group:'cn',size:1200,pos:['main','sub','detail','poster']},
+ {id:'pdd',name:'拼多多',spec:'1000×1000',vspec:'750×1000',group:'cn',size:1000,pos:['main','sub','detail','poster']},
+ {id:'douyin',name:'抖音/抖店',spec:'800×800',vspec:'1080×1440',group:'cn',size:800,pos:['main','sub','detail','poster']},
+ {id:'xhs',name:'小红书',spec:'1080×1440',vspec:'1080×1440',group:'cn',size:1080,pos:['seed','sub','poster']},
+ {id:'amazon',name:'亚马逊',spec:'2000×2000',vspec:'2000×2000',group:'global',size:2000,pos:['main','sub','detail']},
+ {id:'tiktok',name:'TikTok Shop',spec:'1080×1080',vspec:'1080×1920',group:'global',size:1080,pos:['main','sub','poster']}
+];
+var POSITIONS=[
+ {id:'main',name:'主图位 · 合规白底',rule:'纯白底、无文字 / 水印；跨境主图禁人物、道具与 Logo',label:'白底主图',shape:'square'},
+ {id:'sub',name:'副图位 · 场景 / 人物融合',rule:'可使用场景参考、模特参考与主题信息',label:'场景主图',shape:'square'},
+ {id:'detail',name:'详情位 · 卖点长图',rule:'按平台宽度排版卖点与商品信息',label:'详情长图',shape:'long'},
+ {id:'seed',name:'种草位 · 笔记图',rule:'3:4 竖版，笔记风格，整组比例统一',label:'种草图',shape:'vertical'},
+ {id:'poster',name:'海报位 · 大促',rule:'可叠促销文案，不可用于主图位',label:'竖版海报',shape:'vertical'}
 ];
 var THEME_CFG={
- '双十一':{bg:'#FFF3E8',main:'#C8202E',sub:'#8C1A22',tag:'双 11 狂欢',badge:'限时特惠'},
- '情人节':{bg:'#FBEAF0',main:'#D4537E',sub:'#993556',tag:'为爱挑选',badge:'心动礼遇'},
- '新品上市':{bg:'#E6F1FB',main:'#185FA5',sub:'#0C447C',tag:'全新上市',badge:'NEW'},
- '日常上新':{bg:'#F1EFE8',main:'#5F5E5A',sub:'#2C2C2A',tag:'日常好物',badge:'精选'}
+ '双十一':{bg:'#FFF1E6',main:'#C8202E',sub:'#8C1A22',tag:'双 11 狂欢',badge:'限时特惠'},
+ '情人节':{bg:'#FCEAF0',main:'#C64B78',sub:'#923353',tag:'为爱挑选',badge:'心动礼遇'},
+ '新品上市':{bg:'#E7F1FB',main:'#185FA5',sub:'#0C447C',tag:'全新上市',badge:'NEW ARRIVAL'},
+ '日常上新':{bg:'#F2F0E9',main:'#5F5E5A',sub:'#2C2C2A',tag:'日常好物',badge:'精选'},
+ '618 大促':{bg:'#FFF0E8',main:'#E2571E',sub:'#9A3612',tag:'618 年中庆',badge:'爆款直降'}
 };
-var THEMES=['双十一','情人节','新品上市','日常上新'];
-var selected={taobao:true,pdd:true};
-var theme='双十一';
-var rawSrc=null,productSrc=null,generated=[];
+var THEMES=['双十一','情人节','新品上市','日常上新','618 大促'];
+var QUALITY=[{k:'quick',n:'快速预览',s:.45},{k:'std',n:'标准',s:.62},{k:'hd',n:'高清',s:.85}];
+var SWITCHES=[
+ {id:'autoCut',n:'主体提取（去除纯白 / 近白背景）',d:true},
+ {id:'model',n:'人物融合（仅非主图位）',d:false},
+ {id:'aiMark',n:'导出图叠加 AI 生成标识',d:true},
+ {id:'cleanText',n:'旧成品图裁切去除原有文案区',d:true}
+];
+var state={
+ items:[],theme:'双十一',
+ platforms:{taobao:true,jd:true,pdd:true,douyin:true,xhs:true,amazon:true,tiktok:true},
+ positions:{main:true,sub:true,detail:true,seed:true,poster:true},
+ quality:1,sw:{autoCut:true,model:false,aiMark:true,cleanText:true},
+ filterPos:'all',filterPlat:'all',view:'grid',
+ generated:[],busy:false,seq:0,taskId:'',dirty:false
+};
 
-function rr(x,a,b,w,h,r){
- x.beginPath();x.moveTo(a+r,b);x.lineTo(a+w-r,b);x.quadraticCurveTo(a+w,b,a+w,b+r);
- x.lineTo(a+w,b+h-r);x.quadraticCurveTo(a+w,b+h,a+w-r,b+h);x.lineTo(a+r,b+h);
- x.quadraticCurveTo(a,b+h,a,b+h-r);x.lineTo(a,b+r);x.quadraticCurveTo(a,b,a+r,b);x.closePath();
-}
-function txt(x,s,px,py,size,color,align,weight){
- x.fillStyle=color;x.textAlign=align||'left';x.textBaseline='alphabetic';
- x.font=(weight||'400')+' '+Math.max(11,Math.round(size))+'px "PingFang SC","Microsoft YaHei",sans-serif';
- x.fillText(s,px,py);
-}
+/* ---------- 小工具 ---------- */
+function $(id){return document.getElementById(id);}
+function el(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!==undefined&&txt!==null)e.textContent=txt;return e;}
+function rr(x,a,b,w,h,r){x.beginPath();x.moveTo(a+r,b);x.lineTo(a+w-r,b);x.quadraticCurveTo(a+w,b,a+w,b+r);x.lineTo(a+w,b+h-r);x.quadraticCurveTo(a+w,b+h,a+w-r,b+h);x.lineTo(a+r,b+h);x.quadraticCurveTo(a,b+h,a,b+h-r);x.lineTo(a,b+r);x.quadraticCurveTo(a,b,a+r,b);x.closePath();}
+function txt(x,s,px,py,size,color,align,weight){x.fillStyle=color;x.textAlign=align||'left';x.textBaseline='alphabetic';x.font=(weight||'400')+' '+Math.max(9,Math.round(size))+'px "PingFang SC","Microsoft YaHei",sans-serif';x.fillText(s,px,py);}
 function cut(s,n){s=String(s||'').replace(/\s+/g,' ').trim();return s.length>n?s.slice(0,n)+'…':s;}
-function bullets(){
- var v=document.getElementById('selling').value||'';
- return v.split(/[、,，;；\n]/).map(function(s){return s.trim();}).filter(Boolean).slice(0,4);
-}
+function bullets(){var v=$('selling').value||'';return v.split(/[、,，;；\n]/).map(function(s){return s.trim();}).filter(Boolean).slice(0,4);}
+function toast(msg){var t=$('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._tm);t._tm=setTimeout(function(){t.classList.remove('show');},2200);}
+function uid(){state.seq++;return 'i'+Date.now().toString(36)+state.seq;}
+function lsGet(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch(e){return d;}}
+function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true;}catch(e){return false;}}
+function pickedPlatforms(){return PLATFORMS.filter(function(p){return state.platforms[p.id];});}
+function pickedPositions(){return POSITIONS.filter(function(o){return state.positions[o.id];});}
+function estimate(){var n=0;pickedPlatforms().forEach(function(p){pickedPositions().forEach(function(o){if(p.pos.indexOf(o.id)>=0)n++;});});return n;}
+function itemsOf(slot){return state.items.filter(function(i){return i.slot===slot;});}
+function firstOf(slots){for(var i=0;i<slots.length;i++){var a=itemsOf(slots[i]);if(a.length)return a[0];}return null;}
+
+/* ---------- 内置示例素材 ---------- */
 function defaultProduct(){
- var c=document.createElement('canvas');c.width=800;c.height=800;
- var x=c.getContext('2d');
+ var c=document.createElement('canvas');c.width=800;c.height=800;var x=c.getContext('2d');
  x.fillStyle='#FFFFFF';x.fillRect(0,0,800,800);
  x.fillStyle='rgba(0,0,0,0.07)';x.beginPath();x.ellipse(400,668,150,24,0,0,Math.PI*2);x.fill();
  x.fillStyle='#8FA3B0';rr(x,290,215,220,420,36);x.fill();
- var g=x.createLinearGradient(290,0,510,0);
- g.addColorStop(0,'rgba(255,255,255,0.45)');g.addColorStop(0.38,'rgba(255,255,255,0)');g.addColorStop(1,'rgba(0,0,0,0.16)');
+ var g=x.createLinearGradient(290,0,510,0);g.addColorStop(0,'rgba(255,255,255,0.45)');g.addColorStop(.38,'rgba(255,255,255,0)');g.addColorStop(1,'rgba(0,0,0,0.16)');
  x.fillStyle=g;rr(x,290,215,220,420,36);x.fill();
  x.fillStyle='#3F4C55';rr(x,300,165,200,58,14);x.fill();
  x.fillStyle='#5A6A75';rr(x,332,142,136,26,9);x.fill();
@@ -223,156 +376,559 @@ function defaultProduct(){
  txt(x,'450 ml',400,560,22,'rgba(255,255,255,0.8)','center','400');
  return c;
 }
+function defaultScene(){
+ var c=document.createElement('canvas');c.width=800;c.height=800;var x=c.getContext('2d');
+ var g=x.createLinearGradient(0,0,800,800);g.addColorStop(0,'#F6E7D6');g.addColorStop(.5,'#EBD8C4');g.addColorStop(1,'#D9C3AC');x.fillStyle=g;x.fillRect(0,0,800,800);
+ x.fillStyle='rgba(255,255,255,.5)';x.beginPath();x.moveTo(80,0);x.lineTo(340,0);x.lineTo(210,560);x.lineTo(30,560);x.closePath();x.fill();
+ x.fillStyle='#C9AE94';x.fillRect(0,600,800,200);
+ x.fillStyle='rgba(255,255,255,.18)';x.fillRect(0,600,800,10);
+ return c;
+}
+
+/* ---------- 图片识别（本地启发式，可改判） ---------- */
+function analyze(img,slot,name){
+ var edgeWhite=0;
+ try{
+  var c=document.createElement('canvas');c.width=48;c.height=48;var x=c.getContext('2d');
+  x.drawImage(img,0,0,48,48);var d=x.getImageData(0,0,48,48).data;
+  var w=0,t=0;
+  for(var y=0;y<48;y++)for(var xx=0;xx<48;xx++){
+   if(xx<5||xx>42||y<5||y>42){var i=(y*48+xx)*4;if(d[i]>238&&d[i+1]>238&&d[i+2]>238)w++;t++;}
+  }
+  edgeWhite=t?w/t:0;
+ }catch(e){edgeWhite=0;}
+ var kind;
+ if(slot==='model')kind='人物参考';
+ else if(slot==='scene')kind='场景参考';
+ else if(slot==='brand')kind='品牌资产';
+ else if(slot==='recycle')kind='成品图';
+ else kind=edgeWhite>.72?'白底图':'带背景实拍';
+ var n=String(name||'').toLowerCase();
+ if(slot!=='brand'&&/海报|poster|banner|成品|旧图|主图|详情/.test(n))kind='成品图';
+ return {kind:kind,edgeWhite:edgeWhite};
+}
 function whiteToAlpha(src){
- var c=document.createElement('canvas');c.width=src.width;c.height=src.height;
- var x=c.getContext('2d');x.drawImage(src,0,0);
- var d;
- try{d=x.getImageData(0,0,c.width,c.height);}catch(e){return src;}
- var a=d.data;
- for(var i=0;i<a.length;i+=4){if(a[i]>240&&a[i+1]>240&&a[i+2]>240)a[i+3]=0;}
- x.putImageData(d,0,0);return c;
+ var c=document.createElement('canvas');c.width=src.width;c.height=src.height;var x=c.getContext('2d');
+ try{x.drawImage(src,0,0);var d=x.getImageData(0,0,c.width,c.height);var a=d.data;
+  for(var i=0;i<a.length;i+=4){if(a[i]>235&&a[i+1]>235&&a[i+2]>235)a[i+3]=0;}
+  x.putImageData(d,0,0);return c;
+ }catch(e){return src;}
 }
-function applySrc(){
- productSrc=document.getElementById('cutWhite').checked?whiteToAlpha(rawSrc):rawSrc;
- if(generated.length)runGen();
+function cropCenter(src){
+ var cw=Math.round(src.width*.72),ch=Math.round(src.height*.72);
+ var c=document.createElement('canvas');c.width=cw;c.height=ch;var x=c.getContext('2d');
+ try{x.drawImage(src,(src.width-cw)/2,(src.height-ch)/2,cw,ch,0,0,cw,ch);return c;}catch(e){return src;}
 }
-function drawProduct(x,rx,ry,rw,rh,ratio){
- var sw=productSrc.width,sh=productSrc.height;
- var s=Math.min(rw*ratio/sw,rh*ratio/sh);
- var dw=sw*s,dh=sh*s;
- x.drawImage(productSrc,rx+(rw-dw)/2,ry+(rh-dh)/2,dw,dh);
+function productImg(){
+ var it=firstOf(['hero','detail','recycle']);
+ if(!it)return defaultProduct();
+ var img=it.img;
+ if(state.sw.cleanText&&it.kind==='成品图')img=cropCenter(img);
+ if(state.sw.autoCut)img=whiteToAlpha(img);
+ return img;
 }
-function paint(type,p){
- var t=THEME_CFG[theme],W,H,target;
- if(type==='详情长图'){W=600;H=1200;target='750px 宽长图';}
- else if(type==='竖版海报'||type==='种草图'){W=p.vw;H=p.vh;target=p.vspec;}
- else {W=p.dw;H=p.dh;target=p.spec;}
- var c=document.createElement('canvas');c.width=W;c.height=H;
- var x=c.getContext('2d');var U=W/800;
- var name=cut(document.getElementById('pname').value,16)||'商品名称';
- var bs=bullets();
- if(type==='白底主图'){
-  x.fillStyle='#FFFFFF';x.fillRect(0,0,W,H);
-  drawProduct(x,0,0,W,H,0.86);
- }else if(type==='场景主图'){
-  x.fillStyle=t.bg;x.fillRect(0,0,W,H);
-  x.fillStyle=t.main;x.fillRect(0,0,W,H*0.15);
-  txt(x,t.tag,W*0.07,H*0.098,34*U,'#FFFFFF','left','500');
-  drawProduct(x,W*0.08,H*0.19,W*0.84,H*0.6,0.9);
-  txt(x,cut(bs[0]||name,22),W*0.07,H*0.93,24*U,t.sub,'left','400');
- }else if(type==='详情长图'){
-  x.fillStyle='#FFFFFF';x.fillRect(0,0,W,H);
-  x.fillStyle=t.main;x.fillRect(0,0,W,140);
-  txt(x,cut(name,18),W*0.06,68,30,'#FFFFFF','left','500');
-  txt(x,t.tag+' · 产品详情',W*0.06,108,17,'rgba(255,255,255,0.88)','left','400');
-  drawProduct(x,0,165,W,500,0.82);
-  var y=710;
-  (bs.length?bs:['核心卖点']).forEach(function(b,i){
-   x.fillStyle=t.bg;rr(x,W*0.06,y,W*0.88,96,10);x.fill();
-   x.fillStyle=t.main;rr(x,W*0.06,y,7,96,3);x.fill();
-   txt(x,'0'+(i+1),W*0.11,y+42,20,t.main,'left','500');
-   txt(x,cut(b,22),W*0.11,y+74,22,t.sub,'left','400');
-   y+=112;
+function refImg(slot){var it=firstOf([slot]);return it?it.img:null;}
+
+/* ---------- 素材槽位渲染 ---------- */
+function renderSlots(){
+ var box=$('slots');box.innerHTML='';
+ SLOT_DEF.forEach(function(s){
+  var wrap=el('div','slot');wrap.dataset.slot=s.id;
+  var h=el('div','slot-h');h.appendChild(el('b',null,s.name));h.appendChild(el('span','tip',s.tip));
+  if(s.req)h.appendChild(el('span','req','必填'));
+  var add=el('button','add','+ 上传');add.dataset.act='add';add.dataset.slot=s.id;h.appendChild(add);wrap.appendChild(h);
+  var drop=el('div','slot-drop','点击或拖拽图片到这里'+(s.multi?'（可多选）':''));drop.dataset.act='add';drop.dataset.slot=s.id;wrap.appendChild(drop);
+  var list=el('div','items');
+  itemsOf(s.id).forEach(function(it){
+   var row=el('div','item');row.dataset.id=it.id;
+   var im=el('img');im.alt=it.name;
+   try{im.src=it.img.src?it.img.src:it.img.toDataURL('image/png');}catch(e){}
+   row.appendChild(im);
+   var main=el('div','item-main');
+   main.appendChild(el('div','item-name',it.name));
+   main.appendChild(el('div','item-meta','识别：'+it.kind+' · 白边 ' + Math.round(it.edgeWhite*100) + '%'));
+   var r=el('div','item-row');
+   var sel=el('select','kindsel');sel.dataset.act='kind';sel.dataset.id=it.id;
+   KINDS.forEach(function(k){var o=document.createElement('option');o.value=k;o.textContent=k;if(k===it.kind)o.selected=true;sel.appendChild(o);});
+   r.appendChild(sel);
+   var lic=el('label','lic');var cb=document.createElement('input');cb.type='checkbox';cb.checked=it.licensed;cb.dataset.act='lic';cb.dataset.id=it.id;lic.appendChild(cb);lic.appendChild(document.createTextNode(' 已授权'));r.appendChild(lic);
+   main.appendChild(r);
+   var tags=el('div','plan-tags');(PLAN[it.kind]||[]).forEach(function(p,i){tags.appendChild(el('span','ptag'+(i===0?'':' warn'),p));});
+   main.appendChild(tags);row.appendChild(main);
+   var del=el('button','item-del','×');del.dataset.act='del';del.dataset.id=it.id;del.title='移除';row.appendChild(del);
+   list.appendChild(row);
   });
-  txt(x,'版式演示 · 非最终上架素材',W*0.06,H-30,15,'#9AA1AB','left','400');
- }else{
-  x.fillStyle=t.bg;x.fillRect(0,0,W,H);
-  x.fillStyle=t.main;x.fillRect(0,0,W,H*0.115);
-  txt(x,t.tag,W*0.07,H*0.078,36*U,'#FFFFFF','left','500');
-  drawProduct(x,W*0.07,H*0.15,W*0.86,H*0.48,0.92);
-  txt(x,cut(name,14),W*0.07,H*0.70,30*U,t.sub,'left','500');
-  var by=H*0.755;
-  (bs.length?bs.slice(0,3):['精选好物']).forEach(function(b){
-   var w=Math.min(W*0.86,cut(b,12).length*20*U+34*U);
-   x.fillStyle='rgba(255,255,255,0.92)';rr(x,W*0.07,by,w,42*U,21*U);x.fill();
-   txt(x,cut(b,12),W*0.07+17*U,by+27*U,18*U,t.sub,'left','400');
-   by+=52*U;
-  });
-  txt(x,t.badge+' · '+p.name,W*0.07,H*0.955,17*U,t.sub,'left','400');
- }
- return {canvas:c,target:target,W:W,H:H};
+  wrap.appendChild(list);box.appendChild(wrap);
+  ['dragenter','dragover'].forEach(function(ev){drop.addEventListener(ev,function(e){e.preventDefault();drop.classList.add('drag');});});
+  ['dragleave','drop'].forEach(function(ev){drop.addEventListener(ev,function(e){e.preventDefault();drop.classList.remove('drag');});});
+  drop.addEventListener('drop',function(e){loadFiles(e.dataTransfer&&e.dataTransfer.files,s.id);});
+ });
+ $('assetCount').textContent=state.items.length+' 张';
 }
-function save(c,name){
- var a=document.createElement('a');a.download=name;a.href=c.toDataURL('image/png');
- document.body.appendChild(a);a.click();document.body.removeChild(a);
+function addItem(img,name,slot,size,builtin){
+ var a=analyze(img,slot,name);
+ state.items.push({id:uid(),slot:slot,name:name,img:img,kind:a.kind,edgeWhite:a.edgeWhite,licensed:true,size:size||0,builtin:!!builtin});
 }
+function loadFiles(files,slot){
+ if(!files||!files.length)return;
+ var arr=Array.prototype.slice.call(files),pending=arr.length,done=0;
+ var s=SLOT_DEF.filter(function(d){return d.id===slot;})[0];
+ if(!s.multi)arr=arr.slice(0,1);
+ arr.forEach(function(f){
+  if(!/^image\//.test(f.type)){toast(f.name+' 不是图片文件，已跳过');pending--;if(pending===0)finish();return;}
+  if(f.size>10*1024*1024){toast(f.name+' 超过 10MB，已跳过');pending--;if(pending===0)finish();return;}
+  var r=new FileReader();
+  r.onload=function(ev){
+   var img=new Image();
+   img.onload=function(){if(!s.multi)state.items=state.items.filter(function(i){return i.slot!==slot;});addItem(img,f.name,slot,f.size);done++;if(--pending===0)finish();};
+   img.onerror=function(){pending--;if(--pending===0)finish();};
+   img.src=ev.target.result;
+  };
+  r.onerror=function(){pending--;if(--pending===0)finish();};
+  r.readAsDataURL(f);
+ });
+ function finish(){renderSlots();renderPlan();refresh(true);if(done)toast('已载入 '+done+' 张素材，识别结果可手动改判');}
+ if(!arr.length)finish();
+}
+
+/* ---------- 配置控件 ---------- */
 function renderChips(){
- var pc=document.getElementById('platformChips');pc.innerHTML='';
+ var pc=$('platformChips');pc.innerHTML='';
  PLATFORMS.forEach(function(p){
-  var e=document.createElement('span');e.className='chip'+(selected[p.id]?' on':'');e.textContent=p.name;
-  e.onclick=function(){selected[p.id]=!selected[p.id];renderChips();updateStat();};pc.appendChild(e);
+  var e=el('span','chip'+(state.platforms[p.id]?' on':''),p.name);
+  e.onclick=function(){state.platforms[p.id]=!state.platforms[p.id];renderChips();changed();};pc.appendChild(e);
  });
- var tc=document.getElementById('themeChips');tc.innerHTML='';
+ var tc=$('themeChips');tc.innerHTML='';
  THEMES.forEach(function(t){
-  var e=document.createElement('span');e.className='chip'+(theme===t?' on':'');e.textContent=t;
-  e.onclick=function(){theme=t;renderChips();if(generated.length)runGen();};tc.appendChild(e);
+  var e=el('span','chip'+(state.theme===t?' on':''),t);
+  e.onclick=function(){state.theme=t;renderChips();changed();};tc.appendChild(e);
  });
 }
-function picked(){return PLATFORMS.filter(function(p){return selected[p.id];});}
-function count(){return picked().reduce(function(n,p){return n+p.assets.length;},0);}
-function updateStat(){document.getElementById('stat').textContent='已选 '+picked().length+' 个平台 · 预计 '+count()+' 张（演示版式）';}
-function renderSpec(){
- var b=document.getElementById('specBody');b.innerHTML='';
- PLATFORMS.forEach(function(p){
-  var tr=document.createElement('tr');
-  tr.innerHTML='<td>'+p.name+'</td><td>'+p.spec+'</td><td>'+p.rule+'</td><td>'+p.assets.join(' / ')+'</td>';
-  b.appendChild(tr);
+function renderPositions(){
+ var box=$('posList');box.innerHTML='';
+ POSITIONS.forEach(function(o){
+  var row=el('label','posrow');var cb=document.createElement('input');cb.type='checkbox';cb.checked=state.positions[o.id];
+  cb.onchange=function(){state.positions[o.id]=cb.checked;changed();};
+  row.appendChild(cb);row.appendChild(el('b',null,o.name));
+  var n=pickedPlatforms().filter(function(p){return p.pos.indexOf(o.id)>=0;}).length;
+  row.appendChild(el('span',null,n+' 个平台'));box.appendChild(row);
+  var fp=$('filterPos'),has=false;
+  for(var i=0;i<fp.options.length;i++)if(fp.options[i].value===o.id)has=true;
+  if(!has){var op=document.createElement('option');op.value=o.id;op.textContent=o.name;fp.appendChild(op);}
  });
 }
-function runGen(){
- var list=picked(),box=document.getElementById('result');
- if(!list.length){box.innerHTML='<div class="empty">至少选一个平台。</div>';generated=[];return;}
- generated=[];box.innerHTML='';
- var tools=document.createElement('div');tools.className='tools';
- var label=document.createElement('span');label.textContent=theme+' 主题 · '+list.length+' 个平台 · '+count()+' 张演示版式图';
- var all=document.createElement('button');all.className='dlall';all.textContent='下载全部';
- all.onclick=function(){generated.forEach(function(g,i){setTimeout(function(){save(g.canvas,g.name);},i*320);});};
- tools.appendChild(label);tools.appendChild(all);box.appendChild(tools);
- var grid=document.createElement('div');grid.className='assets';box.appendChild(grid);
- list.forEach(function(p){
-  p.assets.forEach(function(a){
-   var r=paint(a,p);
-   var fn=p.id+'-'+a+'.png';
-   generated.push({canvas:r.canvas,name:fn});
-   var card=document.createElement('div');card.className='asset';
-   card.appendChild(r.canvas);
-   var info=document.createElement('div');info.className='info';
-   var b=document.createElement('b');b.textContent=p.name+' · '+a;
-   var s1=document.createElement('small');s1.textContent='目标 '+r.target;
-   var s2=document.createElement('small');s2.textContent='演示画布 '+r.W+'×'+r.H;
-   var dl=document.createElement('button');dl.className='dl';dl.textContent='下载 PNG';
-   dl.onclick=(function(cv,n){return function(){save(cv,n);};})(r.canvas,fn);
-   info.appendChild(b);info.appendChild(s1);info.appendChild(s2);info.appendChild(dl);
+function renderQuality(){
+ var box=$('qualitySeg');box.innerHTML='';
+ QUALITY.forEach(function(q,i){
+  var b=el('button',state.quality===i?'on':'',q.n);
+  b.onclick=function(){state.quality=i;renderQuality();changed();};box.appendChild(b);
+ });
+}
+function renderSwitches(){
+ var box=$('switches');box.innerHTML='';
+ SWITCHES.forEach(function(s){
+  var row=el('div','chkrow');row.appendChild(el('label',null,s.n));
+  var sw=el('div','sw'+(state.sw[s.id]?' on':''));sw.appendChild(el('i'));
+  sw.onclick=function(){state.sw[s.id]=!state.sw[s.id];renderSwitches();changed();};
+  row.appendChild(sw);box.appendChild(row);
+ });
+}
+function renderPlan(){
+ var box=$('planList');box.innerHTML='';
+ var ps=pickedPlatforms(),os=pickedPositions();
+ var hero=itemsOf('hero').length,detail=itemsOf('detail').length,rec=itemsOf('recycle').length;
+ var scene=itemsOf('scene').length,model=itemsOf('model').length,brand=itemsOf('brand').length;
+ var steps=[
+  {t:'素材解析',d:state.items.length+' 张已载入 · 本地启发式识别',ok:state.items.length>0},
+  {t:'主体锁定',d:'主体图 '+hero+' 张 / 细节图 '+detail+' 张 → 蒙版锁像素',ok:hero+detail>0},
+  {t:'旧素材回收',d:state.sw.cleanText?rec+' 张 → 裁切文案区 → 抠主体 → 重排版':'已关闭',ok:state.sw.cleanText&&rec>0},
+  {t:'场景融合',d:scene+' 张参考 → 副图 / 海报背景层',ok:scene>0},
+  {t:'人物融合',d:state.sw.model?(model+' 张参考 → 仅非主图位'):'已关闭',ok:state.sw.model&&model>0},
+  {t:'品牌注入',d:brand+' 个 Logo / 主色 → 海报与详情',ok:brand>0},
+  {t:'合规校验',d:'跨境主图自动禁用文字、Logo、人物与 AI 标识',ok:true},
+  {t:'按位导出',d:ps.length+' 平台 × '+os.length+' 素材位 → 预计 '+estimate()+' 张',ok:true}
+ ];
+ steps.forEach(function(s){
+  var row=el('div','pstep');row.appendChild(el('span','pdot'+(s.ok?'':' off')));row.appendChild(el('b',null,s.t));row.appendChild(el('span',null,s.d));box.appendChild(row);
+ });
+}
+function updateStat(){
+ var n=estimate(),g=state.generated.length;
+ $('estText').textContent='预计 '+n+' 张';
+ $('estDetail').textContent=pickedPlatforms().length+' 平台 · '+pickedPositions().length+' 素材位';
+ $('topStat').textContent=pickedPlatforms().length+' 平台 · '+pickedPositions().length+' 素材位 · 预计 '+n+' 张';
+ $('pkgCount').textContent=g;
+ $('stat').textContent=state.theme+' 主题 · 已生成 '+g+' 张 · '+QUALITY[state.quality].n+'导出 · 素材图 '+state.items.length+' 张';
+ $('legalState').textContent=($('licA').checked&&$('licB').checked)?'已确认':'待确认';
+ var can=$('licA').checked&&$('licB').checked&&pickedPlatforms().length>0&&n>0;
+ $('genBtn').disabled=!can;
+ $('dlZip').disabled=!g;$('dlAll').disabled=!g;
+ $('genHint').textContent=!can?'请先完成授权确认并选择平台 / 素材位':(state.dirty?'配置已变更，点此重新生成':'配置变更会自动刷新预览');
+}
+function changed(){state.dirty=true;renderPositions();renderPlan();updateStat();refresh(true);}
+var refreshTimer=null;
+function refresh(fast){
+ clearTimeout(refreshTimer);
+ refreshTimer=setTimeout(function(){if(state.busy)return;buildAll();renderResult();updateStat();},fast?120:0);
+}
+
+/* ---------- 绘制 ---------- */
+function drawProduct(x,img,rx,ry,rw,rh,ratio){
+ if(!img)return;
+ var sw=img.width,sh=img.height;if(!sw||!sh)return;
+ var s=Math.min(rw*ratio/sw,rh*ratio/sh),dw=sw*s,dh=sh*s;
+ x.save();x.shadowColor='rgba(0,0,0,.16)';x.shadowBlur=Math.max(6,rw*.035);x.shadowOffsetY=Math.max(3,rw*.018);
+ x.drawImage(img,rx+(rw-dw)/2,ry+(rh-dh)/2,dw,dh);x.restore();
+}
+function aiBadge(x,W,H,U){
+ if(!state.sw.aiMark)return;
+ var w=92*U,h=24*U,px=W-w-14*U,py=H-h-14*U;
+ x.fillStyle='rgba(28,32,39,.62)';rr(x,px,py,w,h,5*U);x.fill();
+ txt(x,'AI 生成',px+w/2,py+h*.68,13*U,'#FFFFFF','center','500');
+}
+function dims(pos,p){
+ if(pos==='detail'){var dw=Math.min(1200,Math.max(750,p.size));return {w:dw,h:Math.round(dw*1.9),spec:'750 px 宽长图'};}
+ if(pos==='seed'||pos==='poster')return {w:1080,h:1440,spec:p.vspec};
+ return {w:p.size,h:p.size,spec:p.spec};
+}
+function paint(pos,p){
+ var cfg=THEME_CFG[state.theme]||THEME_CFG['日常上新'];
+ var d=dims(pos,p),sc=QUALITY[state.quality].s;
+ var W=Math.max(300,Math.round(d.w*sc)),H=Math.max(300,Math.round(d.h*sc));
+ var c=document.createElement('canvas');c.width=W;c.height=H;var x=c.getContext('2d');var U=W/800;
+ var name=cut($('pname').value,16)||'商品名称',bs=bullets();
+ var custom=($('customTag').value||'').trim();
+ var tag=custom||cfg.tag,badge=cfg.badge;
+ var mainColor=state.theme==='日常上新'?($('brandColor').value||cfg.main):cfg.main;
+ var prod=productImg(),scene=refImg('scene'),model=refImg('model'),logo=refImg('brand');
+ var isGlobal=p.group==='global',notes=[],tags=[];
+ if(pos!=='main'&&itemsOf('recycle').length&&state.sw.cleanText)tags.push({t:'旧素材已重排版',c:''});
+ if(pos==='main'){
+  x.fillStyle='#FFFFFF';x.fillRect(0,0,W,H);
+  drawProduct(x,prod,0,0,W,H,.86);
+  tags.push({t:'纯白底',c:'ok'});tags.push({t:'无文字',c:'ok'});
+  if(state.sw.model)notes.push('已拦截：主图位禁人物融合');
+  if(state.sw.aiMark)notes.push(isGlobal?'已拦截：跨境主图不叠加标识（合规待确认）':'已拦截：主图位不叠加 AI 标识');
+  if(logo)notes.push('已拦截：主图位禁用 Logo');
+ }else if(pos==='sub'){
+  if(scene){x.save();try{x.filter='blur('+Math.max(4,Math.round(16*U))+'px)';}catch(e){}x.globalAlpha=.75;x.drawImage(scene,0,0,W,H);x.restore();}
+  x.fillStyle=cfg.bg;x.globalAlpha=scene?.55:1;x.fillRect(0,0,W,H);x.globalAlpha=1;
+  x.fillStyle=mainColor;x.fillRect(0,0,W,H*.14);
+  txt(x,tag,W*.07,H*.094,32*U,'#FFFFFF','left','500');
+  if(state.sw.model&&model){
+   x.save();x.globalAlpha=.30;var mw=W*.42,mh=H*.68;x.drawImage(model,W*.54,H*.2,mw,mh);x.restore();
+   var g=x.createLinearGradient(W*.5,0,W,0);g.addColorStop(0,'rgba(255,255,255,0)');g.addColorStop(1,cfg.bg);x.fillStyle=g;x.fillRect(W*.5,0,W*.5,H);
+   tags.push({t:'人物参考已参与',c:''});
+  }
+  if(scene)tags.push({t:'场景参考已参与',c:''});
+  drawProduct(x,prod,W*.08,H*.17,W*.84,H*.62,.9);
+  x.fillStyle='rgba(255,255,255,.86)';rr(x,W*.06,H*.84,W*.88,H*.1,6*U);x.fill();
+  txt(x,cut(bs[0]||name,20),W*.09,H*.905,20*U,cfg.sub,'left','500');
+  if(state.sw.aiMark&&!isGlobal)aiBadge(x,W,H,U);
+  if(isGlobal&&state.sw.aiMark)tags.push({t:'跨境合规',c:'warn'});
+ }else if(pos==='detail'){
+  x.fillStyle='#FFFFFF';x.fillRect(0,0,W,H);
+  x.fillStyle=mainColor;x.fillRect(0,0,W,H*.105);
+  txt(x,cut(name,18),W*.06,H*.052,28*U,'#FFFFFF','left','600');
+  txt(x,tag+' · 产品详情',W*.06,H*.085,15*U,'rgba(255,255,255,.9)','left','400');
+  drawProduct(x,0,H*.12,W,H*.35,.8);
+  var y=H*.52;
+  (bs.length?bs:['核心卖点']).forEach(function(b,i){
+   x.fillStyle=cfg.bg;rr(x,W*.06,y,W*.88,H*.088,8*U);x.fill();
+   x.fillStyle=mainColor;rr(x,W*.06,y,5*U,H*.088,2*U);x.fill();
+   txt(x,'0'+(i+1),W*.1,y+H*.032,17*U,mainColor,'left','600');
+   txt(x,cut(b,20),W*.1,y+H*.067,17*U,cfg.sub,'left','400');
+   y+=H*.1;
+  });
+  if(logo){try{x.drawImage(logo,W*.78,H*.93,W*.16,W*.16*(logo.height/logo.width));}catch(e){}}
+  if(state.sw.aiMark&&!isGlobal)aiBadge(x,W,H,U);
+  tags.push({t:'卖点自动排版',c:'ok'});
+ }else if(pos==='seed'){
+  x.fillStyle=cfg.bg;x.fillRect(0,0,W,H);
+  if(scene){x.save();try{x.filter='blur('+Math.max(4,Math.round(20*U))+'px)';}catch(e){}x.globalAlpha=.35;x.drawImage(scene,0,0,W,H*.55);x.restore();}
+  txt(x,tag,W*.08,H*.068,30*U,mainColor,'left','600');
+  drawProduct(x,prod,W*.06,H*.085,W*.88,H*.47,.9);
+  txt(x,cut(name,14),W*.08,H*.625,28*U,cfg.sub,'left','600');
+  var by=H*.66;
+  (bs.length?bs.slice(0,3):['精选好物']).forEach(function(b){
+   var w=Math.min(W*.84,cut(b,12).length*16*U+30*U);
+   x.fillStyle='rgba(255,255,255,.94)';rr(x,W*.08,by,w,38*U,19*U);x.fill();
+   txt(x,cut(b,12),W*.08+15*U,by+25*U,15*U,cfg.sub,'left','400');by+=46*U;
+  });
+  if(logo){try{x.drawImage(logo,W*.08,H*.9,52*U,52*U*(logo.height/logo.width));}catch(e){}}
+  txt(x,'#'+cut(name,8).replace(/\s/g,'')+'  #好物分享',W*.08,H*.955,14*U,cfg.sub,'left','400');
+  if(state.sw.aiMark&&!isGlobal)aiBadge(x,W,H,U);
+  tags.push({t:'3:4 竖版',c:'ok'});
+ }else{
+  x.fillStyle=cfg.bg;x.fillRect(0,0,W,H);
+  x.fillStyle=mainColor;x.fillRect(0,0,W,H*.13);
+  txt(x,tag,W*.07,H*.088,36*U,'#FFFFFF','left','600');
+  drawProduct(x,prod,W*.07,H*.155,W*.86,H*.46,.92);
+  txt(x,cut(name,14),W*.07,H*.685,30*U,cfg.sub,'left','600');
+  var py=H*.725;
+  (bs.length?bs.slice(0,3):['精选好物']).forEach(function(b){
+   var w=Math.min(W*.86,cut(b,12).length*18*U+34*U);
+   x.fillStyle='rgba(255,255,255,.92)';rr(x,W*.07,py,w,40*U,20*U);x.fill();
+   txt(x,cut(b,12),W*.07+17*U,py+26*U,16*U,cfg.sub,'left','400');py+=49*U;
+  });
+  x.fillStyle=$('brandColor').value||mainColor;rr(x,W*.07,H*.905,W*.44,H*.05,6*U);x.fill();
+  txt(x,badge,W*.29,H*.94,17*U,'#FFFFFF','center','500');
+  if(logo){try{x.drawImage(logo,W*.78,H*.9,70*U,70*U*(logo.height/logo.width));}catch(e){}}
+  if(state.sw.aiMark&&!isGlobal)aiBadge(x,W,H,U);
+  tags.push({t:'促销文案',c:''});
+ }
+ return {canvas:c,W:W,H:H,target:d.spec,notes:notes,tags:tags};
+}
+
+/* ---------- 生成 ---------- */
+function buildAll(){
+ var out=[],ps=pickedPlatforms(),os=pickedPositions();
+ os.forEach(function(o){
+  ps.forEach(function(p){
+   if(p.pos.indexOf(o.id)<0)return;
+   var r=paint(o.id,p);
+   out.push({pos:o,platform:p,r:r,name:p.id+'-'+o.id+'-'+r.W+'x'+r.H+'.png'});
+  });
+ });
+ state.generated=out;
+}
+function renderResult(){
+ var box=$('result');box.innerHTML='';
+ var gs=state.generated.filter(function(g){
+  return (state.filterPos==='all'||g.pos.id===state.filterPos)&&(state.filterPlat==='all'||g.platform.id===state.filterPlat);
+ });
+ if(!gs.length){box.appendChild(el('div','empty','没有符合条件的素材。\n请在左侧选择平台与素材位，或调整右侧筛选条件。'));return;}
+ POSITIONS.forEach(function(o){
+  var list=gs.filter(function(g){return g.pos.id===o.id;});
+  if(!list.length)return;
+  var group=el('div','group');var gh=el('div','group-head');
+  gh.appendChild(el('b',null,o.name));gh.appendChild(el('span','group-rule',o.rule));gh.appendChild(el('span','n',list.length+' 张'));
+  group.appendChild(gh);
+  var grid=el('div','assets'+(state.view==='list'?' list':''));
+  list.forEach(function(g){
+   var card=el('div','asset');var r=g.r;
+   var cv=r.canvas;cv.onclick=(function(gg){return function(){openModal(gg);};})(g);card.appendChild(cv);
+   var info=el('div','info');
+   info.appendChild(el('b',null,g.pos.label+' · '+g.platform.name));
+   info.appendChild(el('small',null,'目标 '+r.target+' · 导出 '+r.W+'×'+r.H+' px（演示）'));
+   var tags=el('div','tags');
+   r.tags.forEach(function(t){tags.appendChild(el('span','tag'+(t.c?' '+t.c:''),t.t));});
+   if(g.platform.group==='global')tags.appendChild(el('span','tag warn','跨境规则'));
+   r.notes.forEach(function(n){tags.appendChild(el('span','tag warn',cut(n,18)));});
+   info.appendChild(tags);
+   var row=el('div','dlrow');
+   var dl=el('button','dl','下载 PNG');dl.onclick=(function(cc,nn){return function(){saveCanvas(cc,nn);};})(r.canvas,g.name);
+   var zm=el('button','dl zoom','⤢');zm.title='放大预览';zm.onclick=(function(gg){return function(){openModal(gg);};})(g);
+   row.appendChild(dl);row.appendChild(zm);info.appendChild(row);
    card.appendChild(info);grid.appendChild(card);
   });
+  group.appendChild(grid);box.appendChild(group);
  });
- var note=document.createElement('div');note.className='note';
- note.innerHTML='纯白主图不加任何文字，是为了对齐亚马逊 / TikTok Shop 的规则；场景图和海报则叠了主题文案——这就是「一套图不能通吃」的直观例子。真实系统里这一步由异步任务完成：抠图锁主体 → 生成场景背景 → 模板排版 → 平台规则校验 → 注入 AI 标识 → 打包导出。';
- box.appendChild(note);
 }
-document.getElementById('fileInput').addEventListener('change',function(e){
- var f=e.target.files&&e.target.files[0];if(!f)return;
- var hint=document.getElementById('uploadHint');
- if(!/^image\//.test(f.type)){hint.textContent='请选择图片文件（JPG / PNG）。';return;}
- if(f.size>8*1024*1024){hint.textContent='图片超过 8MB，建议压缩后再试。';return;}
- var r=new FileReader();
- r.onload=function(ev){
-  var img=new Image();
-  img.onload=function(){rawSrc=img;applySrc();hint.textContent='已载入 '+f.name+'（仅在本机浏览器内使用，不会上传）。';};
-  img.onerror=function(){hint.textContent='这张图片读取失败，换一张试试。';};
-  img.src=ev.target.result;
+
+/* ---------- 下载 ---------- */
+function saveCanvas(c,name){var a=document.createElement('a');a.download=name;a.href=c.toDataURL('image/png');document.body.appendChild(a);a.click();document.body.removeChild(a);}
+function b64bytes(u){var s=String(u).split(',')[1]||'',bin=atob(s),o=new Uint8Array(bin.length);for(var i=0;i<bin.length;i++)o[i]=bin.charCodeAt(i);return o;}
+var CRC_T=null;
+function crc32(buf){
+ if(!CRC_T){CRC_T=new Uint32Array(256);for(var n=0;n<256;n++){var c=n;for(var k=0;k<8;k++)c=(c&1)?(0xEDB88320^(c>>>1)):(c>>>1);CRC_T[n]=c>>>0;}}
+ var c=0xFFFFFFFF;for(var i=0;i<buf.length;i++)c=CRC_T[(c^buf[i])&0xFF]^(c>>>8);return (c^0xFFFFFFFF)>>>0;
+}
+function zipStore(files){
+ var enc=new TextEncoder(),parts=[],central=[],offset=0;
+ files.forEach(function(f){
+  var nb=enc.encode(f.name),crc=crc32(f.data),len=f.data.length;
+  var lh=new Uint8Array(30+nb.length),v=new DataView(lh.buffer);
+  v.setUint32(0,0x04034b50,true);v.setUint16(4,20,true);v.setUint16(6,0x0800,true);v.setUint16(8,0,true);
+  v.setUint16(10,0,true);v.setUint16(12,0,true);v.setUint32(14,crc,true);v.setUint32(18,len,true);v.setUint32(22,len,true);
+  v.setUint16(26,nb.length,true);v.setUint16(28,0,true);lh.set(nb,30);
+  parts.push(lh,f.data);
+  var ch=new Uint8Array(46+nb.length),cv=new DataView(ch.buffer);
+  cv.setUint32(0,0x02014b50,true);cv.setUint16(4,20,true);cv.setUint16(6,20,true);cv.setUint16(8,0x0800,true);
+  cv.setUint16(10,0,true);cv.setUint16(12,0,true);cv.setUint16(14,0,true);cv.setUint32(16,crc,true);
+  cv.setUint32(20,len,true);cv.setUint32(24,len,true);cv.setUint16(28,nb.length,true);cv.setUint16(30,0,true);
+  cv.setUint16(32,0,true);cv.setUint16(34,0,true);cv.setUint16(36,0,true);cv.setUint32(38,0,true);cv.setUint32(42,offset,true);
+  ch.set(nb,46);central.push(ch);
+  offset+=lh.length+len;
+ });
+ var cdSize=0;central.forEach(function(c){cdSize+=c.length;});
+ var eocd=new Uint8Array(22),ev=new DataView(eocd.buffer);
+ ev.setUint32(0,0x06054b50,true);ev.setUint16(4,0,true);ev.setUint16(6,0,true);
+ ev.setUint16(8,files.length,true);ev.setUint16(10,files.length,true);
+ ev.setUint32(12,cdSize,true);ev.setUint32(16,offset,true);ev.setUint16(20,0,true);
+ return new Blob(parts.concat(central,[eocd]),{type:'application/zip'});
+}
+function downloadZip(){
+ if(!state.generated.length){toast('请先生成素材');return;}
+ var enc=new TextEncoder();
+ var files=state.generated.map(function(g){
+  return {name:g.pos.id+'/'+g.platform.id+'/'+g.name,data:b64bytes(g.r.canvas.toDataURL('image/png'))};
+ });
+ var lines=[
+  '电商素材工作台 · 素材包清单',
+  '任务编号：TASK-'+state.taskId,
+  '生成时间：'+new Date().toLocaleString('zh-CN'),
+  '宣传主题：'+state.theme,
+  '商品名称：'+($('pname').value||'—'),
+  '类目：'+$('category').value,
+  '投放平台：'+pickedPlatforms().map(function(p){return p.name;}).join('、'),
+  '素材位：'+pickedPositions().map(function(o){return o.name;}).join('、'),
+  '输出档位：'+QUALITY[state.quality].n,
+  '文件数：'+files.length+' 张',
+  '授权与留痕：'+(($('licA').checked&&$('licB').checked)?'已确认':'未确认'),
+  '',
+  '── 文件清单 ──'
+ ];
+ state.generated.forEach(function(g,i){
+  lines.push((i+1)+'. '+g.pos.id+'/'+g.platform.id+'/'+g.name+'  |  目标 '+g.r.target+'  |  演示导出 '+g.r.W+'×'+g.r.H);
+ });
+ lines.push('');
+ lines.push('说明：本包为版式演示样张，不是平台最终上架素材；图片仅在浏览器本地合成，');
+ lines.push('识别、抠图、去文字与融合为前端近似演示，未接入 AI 模型；暂无可运行的小程序代码。');
+ files.push({name:'manifest.txt',data:enc.encode(lines.join('\n'))});
+ try{
+  var blob=zipStore(files),u=URL.createObjectURL(blob),a=document.createElement('a');
+  a.download='ecom-assets-'+state.taskId+'.zip';a.href=u;document.body.appendChild(a);a.click();document.body.removeChild(a);
+  setTimeout(function(){URL.revokeObjectURL(u);},3000);
+  toast('已打包 '+(files.length-1)+' 张素材 + 清单，按素材位 / 平台分目录');
+ }catch(e){toast('打包失败，请改用逐张下载');}
+}
+function downloadAll(){
+ if(!state.generated.length){toast('请先生成素材');return;}
+ toast('将依次下载 '+state.generated.length+' 张 PNG，请允许浏览器多文件下载');
+ state.generated.forEach(function(g,i){setTimeout(function(){saveCanvas(g.r.canvas,g.name);},i*260);});
+}
+
+/* ---------- 预览弹窗 ---------- */
+function openModal(g){
+ $('modalImg').src=g.r.canvas.toDataURL('image/png');
+ var info=$('modalInfo');info.innerHTML='';
+ info.appendChild(el('h3',null,g.pos.label+' · '+g.platform.name));
+ info.appendChild(el('p',null,'素材位：'+g.pos.name));
+ info.appendChild(el('p',null,'目标规格：'+g.r.target));
+ info.appendChild(el('p',null,'演示导出：'+g.r.W+' × '+g.r.H+' px · '+QUALITY[state.quality].n));
+ info.appendChild(el('p',null,'平台规则：'+g.pos.rule));
+ g.r.notes.forEach(function(n){info.appendChild(el('p',null,'· '+n));});
+ var b=el('button','tbtn primary','下载 PNG');b.onclick=function(){saveCanvas(g.r.canvas,g.name);};
+ var c=el('button','tbtn','关闭');c.onclick=function(){$('modal').classList.remove('show');};
+ info.appendChild(b);info.appendChild(c);
+ $('modal').classList.add('show');
+}
+
+/* ---------- 草稿 / 历史 ---------- */
+function snapshot(){
+ return {theme:state.theme,platforms:state.platforms,positions:state.positions,quality:state.quality,sw:state.sw,
+  pname:$('pname').value,category:$('category').value,selling:$('selling').value,brandColor:$('brandColor').value,customTag:$('customTag').value,ts:Date.now()};
+}
+function applySnapshot(s){
+ if(!s)return;
+ if(s.theme&&THEME_CFG[s.theme])state.theme=s.theme;
+ if(s.platforms)state.platforms=s.platforms;
+ if(s.positions)state.positions=s.positions;
+ if(typeof s.quality==='number')state.quality=s.quality;
+ if(s.sw)state.sw=s.sw;
+ ['pname','category','selling','brandColor','customTag'].forEach(function(k){if(s[k]!==undefined)$(k).value=s[k];});
+ renderAll();buildAll();renderResult();updateStat();
+}
+function renderHistory(){
+ var h=lsGet('ecs_history',[]);$('histCount').textContent=h.length;
+ var box=$('histList');box.innerHTML='';
+ var draft=lsGet('ecs_draft',null);
+ if(draft){var d0=el('div','dd-item');d0.appendChild(el('b',null,'当前草稿'));d0.appendChild(el('span',null,new Date(draft.ts).toLocaleString('zh-CN')+' · 点击恢复'));d0.onclick=function(){applySnapshot(draft);$('histMenu').classList.remove('show');toast('已恢复草稿（图片需重新上传）');};box.appendChild(d0);}
+ if(!h.length&&!draft)box.appendChild(el('div','dd-empty','还没有保存过任务配置'));
+ h.slice(0,6).forEach(function(s){
+  var d=el('div','dd-item');d.appendChild(el('b',null,(s.pname||'未命名商品')+' · '+s.theme));
+  d.appendChild(el('span',null,new Date(s.ts).toLocaleString('zh-CN')+' · 点击恢复'));
+  d.onclick=function(){applySnapshot(s);$('histMenu').classList.remove('show');toast('已恢复配置（图片需重新上传）');};
+  box.appendChild(d);
+ });
+}
+
+/* ---------- 生成动画 ---------- */
+function runGen(){
+ if(!$('licA').checked||!$('licB').checked){$('secLegal').classList.remove('closed');$('secLegal').classList.add('flash');toast('请先完成授权与留痕确认');return;}
+ if(!pickedPlatforms().length){toast('请至少选择一个投放平台');return;}
+ if(state.busy)return;
+ state.busy=true;$('progress').classList.add('show');$('genBtn').disabled=true;
+ var steps=['解析素材与授权状态','锁定商品主体像素','处理旧成品素材 / 参考图','按素材位合成版式','执行平台合规校验','准备导出文件'];
+ var i=0;
+ function tick(){
+  var pct=Math.round((i+1)/steps.length*100);
+  $('pbarFill').style.width=pct+'%';$('pText').textContent='('+(i+1)+'/'+steps.length+') '+steps[i]+'…';
+  i++;
+  if(i<steps.length){setTimeout(tick,170);}else{
+   setTimeout(function(){
+    buildAll();renderResult();updateStat();state.dirty=false;state.busy=false;
+    $('genBtn').disabled=false;$('genHint').textContent='配置变更会自动刷新预览';
+    setTimeout(function(){$('progress').classList.remove('show');$('pbarFill').style.width='0%';},600);
+    toast('已生成 '+state.generated.length+' 张素材');
+   },160);
+  }
+ }
+ tick();
+}
+
+/* ---------- 事件 ---------- */
+function renderAll(){renderSlots();renderChips();renderPositions();renderQuality();renderSwitches();renderPlan();}
+function bind(){
+ document.querySelectorAll('.sec-h').forEach(function(h){
+  h.onclick=function(){h.parentNode.classList.toggle('closed');};
+ });
+ $('slots').addEventListener('click',function(e){
+  var t=e.target,b=t.closest?t.closest('[data-act]'):null;if(!b)return;
+  var act=b.dataset.act,id=b.dataset.id,slot=b.dataset.slot;
+  if(act==='add'){pendingSlot=slot;$('fileInput').multiple=!!(SLOT_DEF.filter(function(s){return s.id===slot;})[0]||{}).multi;$('fileInput').click();}
+  else if(act==='del'){state.items=state.items.filter(function(i){return i.id!==id;});renderSlots();renderPlan();refresh(true);}
+ });
+ $('slots').addEventListener('change',function(e){
+  var t=e.target;if(!t.dataset.act)return;
+  var it=state.items.filter(function(i){return i.id===t.dataset.id;})[0];if(!it)return;
+  if(t.dataset.act==='kind'){it.kind=t.value;renderSlots();renderPlan();refresh(true);}
+  else if(t.dataset.act==='lic'){it.licensed=t.checked;}
+ });
+ var pendingSlot='hero';
+ $('fileInput').addEventListener('change',function(e){loadFiles(e.target.files,pendingSlot);e.target.value='';});
+ $('clearAssets').onclick=function(){state.items=[];renderSlots();renderPlan();refresh(true);toast('已清空素材，将使用内置示意商品');};
+ ['pname','selling','customTag'].forEach(function(k){$(k).addEventListener('input',changed);});
+ $('category').addEventListener('change',changed);
+ $('brandColor').addEventListener('input',changed);
+ $('licA').addEventListener('change',function(){updateStat();});
+ $('licB').addEventListener('change',function(){updateStat();});
+ $('platAll').onclick=function(){PLATFORMS.forEach(function(p){state.platforms[p.id]=true;});renderChips();changed();};
+ $('platNone').onclick=function(){PLATFORMS.forEach(function(p){state.platforms[p.id]=false;});renderChips();changed();};
+ $('filterPos').onchange=function(){state.filterPos=this.value;renderResult();};
+ $('filterPlat').onchange=function(){state.filterPlat=this.value;renderResult();};
+ $('viewSeg').onclick=function(e){var b=e.target.closest?e.target.closest('button'):null;if(!b)return;state.view=b.dataset.v;
+  Array.prototype.forEach.call(this.children,function(c){c.classList.toggle('on',c===b);});renderResult();};
+ $('genBtn').onclick=runGen;
+ $('dlZip').onclick=downloadZip;
+ $('dlAll').onclick=downloadAll;
+ $('saveDraft').onclick=function(){
+  var s=snapshot();
+  if(!lsSet('ecs_draft',s)){toast('本机浏览器不允许本地存储');return;}
+  var h=lsGet('ecs_history',[]);h.unshift(s);lsSet('ecs_history',h.slice(0,8));renderHistory();toast('草稿已保存到本机浏览器');
  };
- r.readAsDataURL(f);
-});
-document.getElementById('cutWhite').addEventListener('change',applySrc);
-document.getElementById('resetImg').onclick=function(){
- rawSrc=defaultProduct();document.getElementById('fileInput').value='';
- document.getElementById('cutWhite').checked=false;applySrc();
- document.getElementById('uploadHint').textContent='已恢复内置示意商品图。支持 JPG / PNG，建议 ≤8MB。';
-};
-document.getElementById('genBtn').onclick=function(){runGen();this.textContent='重新生成';};
-rawSrc=defaultProduct();productSrc=rawSrc;
-renderChips();renderSpec();updateStat();runGen();
+ $('historyBtn').onclick=function(e){e.stopPropagation();$('histMenu').classList.toggle('show');};
+ document.addEventListener('click',function(e){if(!$('histMenu').contains(e.target)&&e.target!==$('historyBtn'))$('histMenu').classList.remove('show');});
+ $('modal').onclick=function(e){if(e.target===this)this.classList.remove('show');};
+ document.addEventListener('keydown',function(e){if(e.key==='Escape')$('modal').classList.remove('show');});
+ var fp=$('filterPlat');
+ PLATFORMS.forEach(function(p){var o=document.createElement('option');o.value=p.id;o.textContent=p.name;fp.appendChild(o);});
+}
+
+/* ---------- 初始化 ---------- */
+function init(){
+ var d=new Date(),pad=function(n){return n<10?'0'+n:''+n;};
+ state.taskId=d.getFullYear()+pad(d.getMonth()+1)+pad(d.getDate())+'-'+String(Math.floor(Math.random()*9000)+1000);
+ $('taskId').textContent='TASK-'+state.taskId;
+ bind();
+ addItem(defaultProduct(),'示例商品图（内置）','hero',0,true);
+ addItem(defaultScene(),'示例场景参考（内置）','scene',0,true);
+ renderAll();renderHistory();buildAll();renderResult();updateStat();
+ var draft=lsGet('ecs_draft',null);
+ if(draft){applySnapshot(draft);$('genHint').textContent='已恢复上次草稿（图片需重新上传）';}
+}
+init();
 </script>
 </body>
 </html>
